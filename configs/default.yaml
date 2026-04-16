@@ -1,0 +1,21 @@
+input:
+  data_path: ../../DATA/data_for_model.csv
+
+output:
+  output_dir: outputs/latest
+  figures_dir: outputs/latest/figures
+  tables_dir: outputs/latest/tables
+  reports_dir: outputs/latest/reports
+
+plot:
+  format: png
+  dpi: 220
+  style: whitegrid
+
+analysis:
+  min_n_models: 30
+  lci_min_valid_fraction: 0.5
+  alpha: 0.05
+
+reproducibility:
+  seed: 42

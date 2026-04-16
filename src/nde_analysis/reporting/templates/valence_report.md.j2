@@ -1,0 +1,94 @@
+# Valence Multivariate Modeling Report
+
+## Research Question
+
+Do demographic, psychological, and experiential variables independently predict NDE valence?
+
+## Valence Class Distribution
+
+Original valence distribution:
+
+{{ original_valence_dist }}
+
+Binarized valence distribution used for modeling:
+
+{{ binary_valence_dist }}
+
+Mixed and Negative categories are grouped into a single non-positive class to ensure adequate group size and stable estimation in multivariate models.
+
+## Methodology
+
+- Outcome: binary valence (`Positive = 1`, `Mixed/Negative = 0`).
+- Models: hierarchical logistic regression.
+  - Model 1: demographics only.
+  - Model 2: demographics + psychological factors.
+  - Model 3: demographics + psychological + experiential factor.
+- Missing data handling: complete-case per model.
+- Fit diagnostics: pseudo-R² and likelihood-ratio tests.
+
+## Model Sample Sizes
+
+{{ sample_table }}
+
+## Likelihood-Ratio Comparisons
+
+{{ fit_table }}
+
+## Multicollinearity Diagnostics (VIF)
+
+VIF is computed using valence, demographic variables, CTQ subscales, ADHD, ERQ scores, and Greyson non-affective score.
+
+{{ vif_table }}
+
+![Variance inflation factors]({{ fig_vif }})
+
+## Predictor Correlation Heatmap
+
+Spearman correlations among predictors are shown below to visualize dependence structure.
+
+![Predictor correlation heatmap]({{ fig_corr }})
+
+## Coefficients (Odds Ratios)
+
+### Model 1
+
+{{ model1_table }}
+
+### Model 2
+
+{{ model2_table }}
+
+### Model 3
+
+{{ model3_table }}
+
+## Figures
+
+### Model 1 Odds-Ratio Forest
+
+![Model 1 odds-ratio forest]({{ fig_model1 }})
+
+### Model 2 Odds-Ratio Forest
+
+![Model 2 odds-ratio forest]({{ fig_model2 }})
+
+### Model 3 Odds-Ratio Forest
+
+![Model 3 odds-ratio forest]({{ fig_model3 }})
+
+### Model 3 ROC
+
+![Model 3 ROC curve]({{ fig_roc }})
+
+### Model 3 Predicted Probabilities
+
+![Model 3 predicted probabilities]({{ fig_pred }})
+
+## Interpretation
+
+{{ interpretation }}
+
+## Limitations
+
+- Complete-case analysis can reduce effective sample size.
+- Logistic model estimates are association-based and do not imply causality.

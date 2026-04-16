@@ -1,0 +1,34 @@
+# Covariate Diagnostics Report
+
+## Purpose
+
+Evaluate covariate overlap and group balance between positive and non-positive valence groups before adjusted outcome modeling.
+
+## Methodology
+
+- Continuous and ordinal covariates: Mann-Whitney U tests.
+- Categorical covariate (`sex_Male`): chi-square test.
+- Visual diagnostics:
+  - KDE overlap by valence
+  - box/strip distributions by valence
+  - sex distribution bar chart
+
+## Descriptive Summary by Valence
+
+{{ summary_table }}
+
+## Balance Tests
+
+{{ balance_table }}
+
+## Figures
+
+![Covariate KDE overlap]({{ fig_kde }})
+
+![Covariate box/strip distributions]({{ fig_box }})
+
+![Sex distribution by valence]({{ fig_sex }})
+
+## Interpretation
+
+{{ interpretation }}

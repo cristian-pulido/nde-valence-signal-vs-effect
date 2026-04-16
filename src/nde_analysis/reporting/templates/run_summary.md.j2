@@ -1,0 +1,24 @@
+# Run Summary
+
+- Data file: `{{ data_path }}`
+- Output directory: `{{ output_dir }}`
+- Figures directory: `{{ figures_dir }}`
+- Tables directory: `{{ tables_dir }}`
+- Reports directory: `{{ reports_dir }}`
+
+## Generated Reports
+
+{% for report in reports %}
+- `{{ report }}`
+{% endfor %}
+
+## Generated Figures
+
+{% for figure in figures %}
+- `{{ figure }}`
+{% endfor %}
+
+## Notes
+
+- All figures are exported as PNG.
+- Repository remains code-only; generated artifacts are intended for local output directories.

@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: nde-analysis
+Version: 0.1.0
+Summary: CLI analysis pipeline for NDE publication workflows
+Requires-Python: >=3.10
+Requires-Dist: pandas>=2.2
+Requires-Dist: numpy>=1.26
+Requires-Dist: scipy>=1.12
+Requires-Dist: statsmodels>=0.14
+Requires-Dist: scikit-learn>=1.4
+Requires-Dist: matplotlib>=3.8
+Requires-Dist: seaborn>=0.13
+Requires-Dist: PyYAML>=6.0
+Requires-Dist: Jinja2>=3.1

@@ -1,0 +1,44 @@
+# Post-NDE Effects Report
+
+## Scope
+
+This report summarizes post-NDE effects for {{ domain_name }}.
+
+## Methodology
+
+- Global change versus zero: Wilcoxon signed-rank test.
+- Positive vs non-positive valence comparison: Mann-Whitney U test.
+- Adjusted OLS models:
+  - Full model: `outcome ~ valence + covariates`
+  - Covariates-only model: `outcome ~ covariates`
+- Model comparison: R², AIC, BIC, and delta metrics.
+
+## Global Change
+
+{{ global_table }}
+
+## Differences by Valence
+
+{{ by_valence_table }}
+
+## Adjusted Models (Full)
+
+{{ full_table }}
+
+## Adjusted Models (Covariates-Only)
+
+{{ cov_only_table }}
+
+## Full vs Covariates-Only Comparison
+
+{{ comparison_table }}
+
+## Figures
+
+{% for figure in figures %}
+![{{ domain_name }} figure {{ loop.index }}]({{ figure }})
+{% endfor %}
+
+## Interpretation
+
+{{ interpretation }}
