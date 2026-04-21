@@ -270,7 +270,10 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
     plot_lci_median_heatmap(lci.long_df, fig_lci_heat, cfg.plot.dpi)
     plot_lci_mean_pointplot(lci.long_df, fig_lci_point, cfg.plot.dpi)
 
-    cov_diag = build_covariate_diagnostics(prep.analysis_df)
+    cov_diag = build_covariate_diagnostics(
+        prep.analysis_df,
+        analysis_pretransform_df=prep.analysis_pretransform_df,
+    )
     overlap_vars = [
         "age",
         "CTQ_IM_SCORE",
@@ -289,6 +292,14 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
 
     write_table(
         cov_diag.summary_table, cfg.tables_dir / "covariate_summary_by_valence.csv"
+    )
+    write_table(
+        cov_diag.overall_table,
+        cfg.tables_dir / "covariate_overall_summary_pretransform.csv",
+    )
+    write_table(
+        cov_diag.overall_categorical_table,
+        cfg.tables_dir / "covariate_overall_categorical_pretransform.csv",
     )
     write_table(cov_diag.balance_table, cfg.tables_dir / "covariate_balance_tests.csv")
     write_table(cov_diag.sex_summary, cfg.tables_dir / "covariate_sex_distribution.csv")
@@ -568,6 +579,10 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         template_dir=template_dir,
         template_name="covariate_diagnostics_report.md.j2",
         context={
+            "overall_table": _table_text(cov_diag.overall_table),
+            "overall_categorical_table": _table_text(
+                cov_diag.overall_categorical_table
+            ),
             "summary_table": _table_text(cov_diag.summary_table),
             "balance_table": _table_text(cov_diag.balance_table),
             "fig_kde": _relative_link(report_cov, fig_cov_kde),

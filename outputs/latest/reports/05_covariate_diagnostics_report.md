@@ -14,6 +14,25 @@ Evaluate covariate overlap and group balance between positive and non-positive v
   - box/strip distributions by valence
   - sex distribution bar chart
 
+## Overall Descriptive Statistics (Pre-Transformation)
+
+```
+       variable   n   mean    std
+            age 217 60.793 13.127
+   CTQ_IM_SCORE 164 24.549  7.707
+     ADHD_SCALE 161 26.646 13.247
+ERQ_reappraisal 156  4.706  1.120
+ERQ_suppression 156  3.380  1.318
+  education_ord 202  2.827  0.782
+```
+
+### Categorical Variable Summary
+
+```
+variable          top_category  top_pct   n
+sex_Male Female/other baseline   58.986 217
+```
+
 ## Descriptive Summary by Valence
 
 ```

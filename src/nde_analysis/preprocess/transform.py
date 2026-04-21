@@ -25,6 +25,7 @@ from nde_analysis.utils.validation import require_columns
 class PreprocessedData:
     raw_df: pd.DataFrame
     analysis_df: pd.DataFrame
+    analysis_pretransform_df: pd.DataFrame
     mcq_df: pd.DataFrame
     lci_df: pd.DataFrame
     lci_score_cols: list[str]
@@ -69,6 +70,19 @@ def preprocess_data(
     data["education_ord"] = data["education"].map(EDUCATION_MAP)
     data["sex_Male"] = (data["sex"].astype(str).str.lower() == "male").astype(int)
 
+    analysis_cols = [
+        "valence",
+        "valence_binary",
+        "age",
+        "sex_Male",
+        "education_ord",
+        "CTQ_IM_SCORE",
+        "ADHD_SCALE",
+        "ERQ_reappraisal",
+        "ERQ_suppression",
+        "greyson_total_no_affective",
+    ]
+
     # Numeric normalization for valence models.
     to_standardize = [
         "age",
@@ -83,6 +97,11 @@ def preprocess_data(
     ]
     for col in to_standardize:
         data[col] = pd.to_numeric(data[col], errors="coerce")
+
+    # Snapshot before z-score transformation for descriptive reporting.
+    analysis_pretransform_df = data[analysis_cols].copy()
+
+    for col in to_standardize:
         data[col] = _zscore(data[col])
 
     # MCQ numeric mapping.
@@ -110,23 +129,12 @@ def preprocess_data(
         lci_df.loc[valid_count < min_valid, score_col] = np.nan
 
     # Master analysis frame used by valence and adjusted effects.
-    analysis_cols = [
-        "valence",
-        "valence_binary",
-        "age",
-        "sex_Male",
-        "education_ord",
-        "CTQ_IM_SCORE",
-        "ADHD_SCALE",
-        "ERQ_reappraisal",
-        "ERQ_suppression",
-        "greyson_total_no_affective",
-    ]
     analysis_df = data[analysis_cols].copy()
 
     return PreprocessedData(
         raw_df=data,
         analysis_df=analysis_df,
+        analysis_pretransform_df=analysis_pretransform_df,
         mcq_df=mcq_df,
         lci_df=lci_df,
         lci_score_cols=lci_score_cols,
