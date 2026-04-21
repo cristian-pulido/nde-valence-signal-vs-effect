@@ -5,6 +5,7 @@ from dataclasses import dataclass
 import pandas as pd
 from scipy.stats import mannwhitneyu, wilcoxon
 
+from nde_analysis.analysis.multiple_testing import add_fdr_columns
 from nde_analysis.preprocess.mappings import MCQ_COLS, MCQ_ITEM_LABELS, MCQ_VALUE_LABELS
 
 
@@ -76,9 +77,14 @@ def run_mcq_analyses(mcq_df: pd.DataFrame) -> MCQResults:
         lambda x: 100 * x / x.sum()
     )
 
+    global_table = add_fdr_columns(pd.DataFrame(global_rows), p_col="p_value")
+    by_valence_table = add_fdr_columns(pd.DataFrame(by_valence_rows), p_col="p_value")
+
     return MCQResults(
-        global_table=pd.DataFrame(global_rows).sort_values("p_value"),
-        by_valence_table=pd.DataFrame(by_valence_rows).sort_values("p_value"),
+        global_table=global_table.sort_values("p_value_fdr", na_position="last"),
+        by_valence_table=by_valence_table.sort_values(
+            "p_value_fdr", na_position="last"
+        ),
         response_distribution=dist,
         long_df=long_df,
     )

@@ -10,7 +10,12 @@ def plot_intercepts(intercept_table, title: str, path: Path, dpi: int = 220) -> 
         return
 
     df = intercept_table.copy().sort_values("intercept")
-    colors = ["#2ca02c" if p < 0.05 else "gray" for p in df["intercept_p_value"]]
+    p_col = (
+        "intercept_p_value_fdr"
+        if "intercept_p_value_fdr" in df.columns
+        else "intercept_p_value"
+    )
+    colors = ["#2ca02c" if p < 0.05 else "gray" for p in df[p_col]]
 
     plt.figure(figsize=(8, max(4, 0.45 * len(df))))
     plt.errorbar(

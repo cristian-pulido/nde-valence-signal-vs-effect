@@ -7,6 +7,8 @@ import pandas as pd
 import statsmodels.api as sm
 from scipy.stats import chi2
 
+from nde_analysis.analysis.multiple_testing import add_fdr_columns
+
 
 @dataclass
 class OutcomeModelResult:
@@ -107,7 +109,10 @@ def run_outcome_models(
             )
         )
 
-    return pd.DataFrame(rows)
+    out = pd.DataFrame(rows)
+    out = add_fdr_columns(out, p_col="intercept_p_value")
+    out = add_fdr_columns(out, p_col="effect_p_value")
+    return out
 
 
 def compare_full_vs_covariates(
@@ -152,18 +157,25 @@ def compare_full_vs_covariates(
         # Approximate LR test using RSS-based relation is not ideal in OLS tables,
         # so we provide a simple nested-model comparison via F test from full model.
         # Here, infer additional value of valence from its own p-value in full model.
-        merged["valence_adds_signal"] = merged["effect_p_value_full"] < 0.05
+        if "effect_p_value_fdr_full" in merged.columns:
+            merged["valence_adds_signal"] = merged["effect_p_value_fdr_full"] < 0.05
+            sort_col = "effect_p_value_fdr_full"
+        else:
+            merged["valence_adds_signal"] = merged["effect_p_value_full"] < 0.05
+            sort_col = "effect_p_value_full"
         merged["interpretation"] = merged.apply(
             lambda r: (
-                "Valence adds explanatory value beyond covariates."
+                "Valence adds explanatory value beyond covariates after FDR correction."
                 if r["valence_adds_signal"]
-                else "Valence does not add clear explanatory value beyond covariates."
+                else "Valence does not add clear explanatory value beyond covariates after FDR correction."
             ),
             axis=1,
         )
+    else:
+        sort_col = "effect_p_value_full"
 
     return OutcomeModelResult(
-        full_table=full.sort_values("effect_p_value", na_position="last"),
+        full_table=full.sort_values("effect_p_value_fdr", na_position="last"),
         covariates_only_table=cov_only.sort_values("outcome"),
-        comparison_table=merged.sort_values("effect_p_value_full", na_position="last"),
+        comparison_table=merged.sort_values(sort_col, na_position="last"),
     )

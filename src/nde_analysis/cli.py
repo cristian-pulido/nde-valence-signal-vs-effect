@@ -77,16 +77,13 @@ def _relative_link(report_path: Path, artifact_path: Path) -> str:
 def _interpret_valence(sample_table: pd.DataFrame, fit_table: pd.DataFrame) -> str:
     r2_m1 = sample_table.loc[sample_table["model"] == "Model 1", "pseudo_r2"].iloc[0]
     r2_m3 = sample_table.loc[sample_table["model"] == "Model 3", "pseudo_r2"].iloc[0]
-    p_21 = fit_table.loc[
-        fit_table["comparison"] == "Model 2 vs Model 1", "p_value"
-    ].iloc[0]
-    p_32 = fit_table.loc[
-        fit_table["comparison"] == "Model 3 vs Model 2", "p_value"
-    ].iloc[0]
+    p_col = "p_value_fdr" if "p_value_fdr" in fit_table.columns else "p_value"
+    p_21 = fit_table.loc[fit_table["comparison"] == "Model 2 vs Model 1", p_col].iloc[0]
+    p_32 = fit_table.loc[fit_table["comparison"] == "Model 3 vs Model 2", p_col].iloc[0]
     return (
         f"Model fit improved from pseudo-R²={r2_m1:.3f} (demographics only) to "
-        f"pseudo-R²={r2_m3:.3f} (full model). LR tests indicated p={p_21:.3f} for "
-        f"Model 2 vs 1 and p={p_32:.3f} for Model 3 vs 2."
+        f"pseudo-R²={r2_m3:.3f} (full model). LR tests indicated FDR-adjusted "
+        f"p={p_21:.3f} for Model 2 vs 1 and p={p_32:.3f} for Model 3 vs 2."
     )
 
 
@@ -95,19 +92,20 @@ def _interpret_post_effects(comparison_df: pd.DataFrame, label: str) -> str:
         return f"No adjusted {label} models met the minimum sample threshold."
     n_add = int(comparison_df["valence_adds_signal"].sum())
     return (
-        f"{n_add} outcomes showed evidence that valence adds explanatory value beyond covariates. "
-        "Interpretation is based on the valence term p-value in the full model and model-fit deltas "
-        "between full and covariates-only specifications."
+        f"{n_add} outcomes showed evidence that valence adds explanatory value beyond covariates after FDR correction. "
+        "Interpretation is based on FDR-adjusted valence p-values in the full model and model-fit "
+        "deltas between full and covariates-only specifications."
     )
 
 
 def _interpret_covariate_balance(balance_df: pd.DataFrame) -> str:
     if balance_df.empty:
         return "No balance diagnostics were available."
-    near_imbalance = int((balance_df["p_value"] < 0.10).sum())
-    significant = int((balance_df["p_value"] < 0.05).sum())
+    p_col = "p_value_fdr" if "p_value_fdr" in balance_df.columns else "p_value"
+    near_imbalance = int((balance_df[p_col] < 0.10).sum())
+    significant = int((balance_df[p_col] < 0.05).sum())
     return (
-        f"{significant} covariates were imbalanced at p<0.05 and {near_imbalance} at p<0.10. "
+        f"{significant} covariates were imbalanced at FDR-adjusted p<0.05 and {near_imbalance} at FDR-adjusted p<0.10. "
         "Distribution overlap plots and balance tests jointly support whether adjusted analysis is plausible."
     )
 
@@ -369,10 +367,12 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         "intercept_ci_low",
         "intercept_ci_high",
         "intercept_p_value",
+        "intercept_p_value_fdr",
         "effect",
         "effect_ci_low",
         "effect_ci_high",
         "effect_p_value",
+        "effect_p_value_fdr",
         "r2",
         "aic",
         "bic",
@@ -384,6 +384,7 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         "intercept_ci_low",
         "intercept_ci_high",
         "intercept_p_value",
+        "intercept_p_value_fdr",
         "r2",
         "aic",
         "bic",
@@ -395,6 +396,8 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         "effect_ci_low_full",
         "effect_ci_high_full",
         "effect_p_value_full",
+        "effect_p_value_fdr_full",
+        "effect_p_value_fdr_reject_full",
         "r2_full",
         "r2_cov_only",
         "delta_r2",
@@ -417,14 +420,18 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         "intercept_ci_low": "baseline_ci_low",
         "intercept_ci_high": "baseline_ci_high",
         "intercept_p_value": "baseline_p",
+        "intercept_p_value_fdr": "baseline_p_fdr",
         "effect": "valence_beta",
         "effect_ci_low": "valence_ci_low",
         "effect_ci_high": "valence_ci_high",
         "effect_p_value": "valence_p",
+        "effect_p_value_fdr": "valence_p_fdr",
         "effect_full": "valence_beta",
         "effect_ci_low_full": "valence_ci_low",
         "effect_ci_high_full": "valence_ci_high",
         "effect_p_value_full": "valence_p",
+        "effect_p_value_fdr_full": "valence_p_fdr",
+        "effect_p_value_fdr_reject_full": "valence_fdr_reject",
         "r2_full": "R2_full",
         "r2_cov_only": "R2_cov_only",
         "delta_r2": "delta_R2",

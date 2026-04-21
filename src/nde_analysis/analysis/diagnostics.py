@@ -5,6 +5,8 @@ from dataclasses import dataclass
 import pandas as pd
 from scipy.stats import chi2_contingency, mannwhitneyu
 
+from nde_analysis.analysis.multiple_testing import add_fdr_columns
+
 
 @dataclass
 class CovariateDiagnostics:
@@ -74,7 +76,8 @@ def build_covariate_diagnostics(analysis_df: pd.DataFrame) -> CovariateDiagnosti
             ].mean(),
         }
     )
-    balance_table = pd.DataFrame(balance_rows).sort_values("p_value")
+    balance_table = add_fdr_columns(pd.DataFrame(balance_rows), p_col="p_value")
+    balance_table = balance_table.sort_values("p_value_fdr", na_position="last")
 
     sex_summary = (
         df_overlap.groupby("valence")["sex_Male"]

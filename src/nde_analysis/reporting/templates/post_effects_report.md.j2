@@ -8,6 +8,7 @@ This report summarizes post-NDE effects for {{ domain_name }}.
 
 - Global change versus zero: Wilcoxon signed-rank test.
 - Positive vs non-positive valence comparison: Mann-Whitney U test.
+- Multiple-testing control: Benjamini-Hochberg FDR correction within each hypothesis family.
 - Adjusted OLS models:
   - Full model: `outcome ~ valence + covariates`
   - Covariates-only model: `outcome ~ covariates`

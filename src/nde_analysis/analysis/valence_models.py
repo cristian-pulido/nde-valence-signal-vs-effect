@@ -6,6 +6,7 @@ import pandas as pd
 import statsmodels.api as sm
 from scipy.stats import chi2
 
+from nde_analysis.analysis.multiple_testing import add_fdr_columns
 from nde_analysis.analysis.statistics import odds_ratio_table
 
 
@@ -77,6 +78,7 @@ def run_valence_models(analysis_df: pd.DataFrame) -> ValenceModelResults:
             },
         ]
     )
+    fit_table = add_fdr_columns(fit_table, p_col="p_value")
 
     sample_table = pd.DataFrame(
         [

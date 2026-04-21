@@ -23,13 +23,14 @@ The workflow includes:
 - **Post-NDE effects: unadjusted analyses**
   - NDE-MCQ (5 outcomes): Wilcoxon and valence-group Mann-Whitney tests
   - LCI-R section scores: Wilcoxon and valence-group Mann-Whitney tests
+  - Multiple testing control with Benjamini-Hochberg FDR correction within each hypothesis family
 - **Post-NDE effects: adjusted analyses**
   - Full model: `outcome ~ valence_binary + covariates`
   - Covariates-only model: `outcome ~ covariates`
-  - Comparison metrics: Delta R², Delta AIC, Delta BIC, and interpretation per outcome
+  - Comparison metrics: Delta R², Delta AIC, Delta BIC, FDR-adjusted valence tests, and interpretation per outcome
 - **Covariate diagnostics for model plausibility**
   - Distribution overlap plots
-  - Group balance tests by valence
+  - Group balance tests by valence with FDR correction across tests
   - Sex composition by valence
 - **Intercept-focused visualizations**
   - Baseline outcome levels (full vs covariates-only) for MCQ and LCI adjusted models
@@ -96,9 +97,16 @@ Reports include methodology, key tables, embedded figures, and interpretation bl
 - **MCQ/LCI coding:** ordinal labels mapped to numeric change scores
 - **ERQ scoring:** reappraisal and suppression subscales derived from item means
 - **Missingness handling:** complete-case per model/outcome
+- **Multiple testing correction:** Benjamini-Hochberg FDR (`fdr_bh`, alpha=0.05) applied to families of related p-values
 - **Adjusted model covariates:**
   - Continuous/ordinal: `age`, `CTQ_IM_SCORE`, `ADHD_SCALE`, `ERQ_reappraisal`, `ERQ_suppression`, `education_ord`, `greyson_total_no_affective`
   - Categorical: `sex_Male`
+
+## Statistical output columns
+
+- Raw p-values are kept as `p_value` (or model-specific names like `effect_p_value`).
+- FDR-adjusted p-values are added as `<p_column>_fdr`.
+- FDR significance flags are added as `<p_column>_fdr_reject` (`True`/`False`).
 
 ## Configuration
 
