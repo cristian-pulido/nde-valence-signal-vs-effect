@@ -7,7 +7,9 @@ The pipeline answers two main analytical questions:
 1. Which demographic, psychological, and experiential variables independently predict NDE valence?
 2. How do post-NDE outcomes (moral cognition and life changes) behave globally, by valence group, and after covariate adjustment?
 
-All outputs are generated in a reproducible structure as tables (`.csv`), figures (`.png`), and narrative reports (`.md`).
+## Direct access to latest article results
+
+For reviewers, the most recent analysis outputs reported in the article are available directly at [`outputs/latest/reports/`](outputs/latest/reports/)
 
 ## Analytical scope
 
@@ -121,7 +123,3 @@ Runtime options are defined in `configs/default.yaml`, including:
 - random seed
 
 CLI options can override config paths, especially `--output-dir`.
-
-## Repository policy
-
-This repository stores analysis code and configuration only. Generated outputs are excluded from version control by `.gitignore`.
