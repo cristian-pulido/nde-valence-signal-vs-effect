@@ -90,6 +90,13 @@ All figures are exported as PNG.
 - `reports/03_post_effects_lci_report.md`
 - `reports/04_adjusted_models_comparison_report.md`
 - `reports/05_covariate_diagnostics_report.md`
+- `reports/bayesian_rank_sum_variable_N.md` (via `scripts/run_bayesian_analysis.py`)
+- `reports/bayesian_rank_sum_fixed_N.md` (via `scripts/run_bayesian_analysis.py`)
+
+Bayesian rank-sum outputs are split by analysis mode:
+
+- Variable-N artifacts are written to the configured output folder (default: `outputs/latest`).
+- Fixed-N artifacts are written to `outputs/no_empty_no_missing_test` by default.
 
 Reports include methodology, key tables, embedded figures, and interpretation blocks.
 
