@@ -21,6 +21,7 @@ class CovariateDiagnostics:
 def build_covariate_diagnostics(
     analysis_df: pd.DataFrame,
     analysis_pretransform_df: pd.DataFrame | None = None,
+    complete_case: bool = False,
 ) -> CovariateDiagnostics:
     overlap_vars = [
         "age",
@@ -32,6 +33,10 @@ def build_covariate_diagnostics(
     ]
 
     df_overlap = analysis_df[["valence_binary", "sex_Male"] + overlap_vars].copy()
+    if complete_case:
+        required = ["valence_binary", "sex_Male"] + overlap_vars
+        keep_index = df_overlap.dropna(subset=required).index
+        df_overlap = df_overlap.loc[keep_index].copy()
     df_overlap["valence"] = df_overlap["valence_binary"].map(
         {1: "Positive", 0: "Non-positive"}
     )
@@ -41,6 +46,8 @@ def build_covariate_diagnostics(
         if analysis_pretransform_df is not None
         else analysis_df
     )
+    if complete_case:
+        source = source.loc[df_overlap.index].copy()
     overall_rows: list[dict] = []
     for var in overlap_vars:
         series = pd.to_numeric(source[var], errors="coerce").dropna()

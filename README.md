@@ -99,6 +99,7 @@ Reports include methodology, key tables, embedded figures, and interpretation bl
 - **MCQ/LCI coding:** ordinal labels mapped to numeric change scores
 - **ERQ scoring:** reappraisal and suppression subscales derived from item means
 - **Missingness handling:** complete-case per model/outcome
+- **Covariate diagnostics sample:** complete-case intersection over balance covariates (`valence_binary`, `sex_Male`, `age`, `CTQ_IM_SCORE`, `ADHD_SCALE`, `ERQ_reappraisal`, `ERQ_suppression`, `education_ord`)
 - **Multiple testing correction:** Benjamini-Hochberg FDR (`fdr_bh`, alpha=0.05) applied to families of related p-values
 - **Adjusted model covariates:**
   - Continuous/ordinal: `age`, `CTQ_IM_SCORE`, `ADHD_SCALE`, `ERQ_reappraisal`, `ERQ_suppression`, `education_ord`, `greyson_total_no_affective`

@@ -273,6 +273,7 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
     cov_diag = build_covariate_diagnostics(
         prep.analysis_df,
         analysis_pretransform_df=prep.analysis_pretransform_df,
+        complete_case=True,
     )
     overlap_vars = [
         "age",
