@@ -14,8 +14,6 @@ from nde_analysis.preprocess.mappings import (
     ERQ_SUPPRESSION_ITEMS,
     LCI_MAP,
     LCI_SECTIONS,
-    MCQ_COLS,
-    MCQ_MAP,
     VALENCE_MAP,
 )
 from nde_analysis.utils.validation import require_columns
@@ -26,7 +24,6 @@ class PreprocessedData:
     raw_df: pd.DataFrame
     analysis_df: pd.DataFrame
     analysis_pretransform_df: pd.DataFrame
-    mcq_df: pd.DataFrame
     lci_df: pd.DataFrame
     lci_score_cols: list[str]
 
@@ -49,7 +46,7 @@ def preprocess_data(
         data = data.loc[~data["TO_DROP"].fillna(False)].copy()
 
     lci_cols = sorted({c for cols in LCI_SECTIONS.values() for c in cols})
-    needed = CORE_MODEL_COLS + ERQ_COLS + MCQ_COLS + lci_cols
+    needed = CORE_MODEL_COLS + ERQ_COLS + lci_cols
     require_columns(data, needed, context="preprocess")
 
     # Keep valid valence classes and derive binary target.
@@ -104,13 +101,6 @@ def preprocess_data(
     for col in to_standardize:
         data[col] = _zscore(data[col])
 
-    # MCQ numeric mapping.
-    mcq_df = data[["valence_binary"] + MCQ_COLS].copy()
-    for col in MCQ_COLS:
-        mcq_df[col] = pd.to_numeric(
-            mcq_df[col].apply(lambda v: MCQ_MAP.get(v, v)), errors="coerce"
-        )
-
     # LCI mapping and section scores.
     lci_df = data[["valence_binary"] + lci_cols].copy()
     for col in lci_cols:
@@ -135,7 +125,6 @@ def preprocess_data(
         raw_df=data,
         analysis_df=analysis_df,
         analysis_pretransform_df=analysis_pretransform_df,
-        mcq_df=mcq_df,
         lci_df=lci_df,
         lci_score_cols=lci_score_cols,
     )

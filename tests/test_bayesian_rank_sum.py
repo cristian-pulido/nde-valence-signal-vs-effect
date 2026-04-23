@@ -8,9 +8,8 @@ def _toy_df() -> pd.DataFrame:
     return pd.DataFrame(
         {
             "valence_binary": [1, 1, 1, 1, 0, 0, 0, 0],
-            "NDE-MCQ_01_Since_NDE": [1, 2, 2, 1, 0, 1, 0, 0],
-            "NDE-MCQ_02_Since_NDE": [1, np.nan, 2, 1, 1, 0, np.nan, 0],
             "LCI_Appreciation of Life": [1.0, 1.2, 0.8, 1.1, 0.7, 0.8, 0.6, 0.5],
+            "LCI_Self-Acceptance": [0.4, np.nan, 0.2, 0.3, 0.1, -0.1, np.nan, 0.0],
         }
     )
 
@@ -18,9 +17,8 @@ def _toy_df() -> pd.DataFrame:
 def test_run_bayesian_rank_sum_columns_and_rows():
     df = _toy_df()
     variables = [
-        "NDE-MCQ_01_Since_NDE",
-        "NDE-MCQ_02_Since_NDE",
         "LCI_Appreciation of Life",
+        "LCI_Self-Acceptance",
     ]
     out = run_bayesian_rank_sum(
         df=df,
@@ -50,7 +48,7 @@ def test_run_bayesian_rank_sum_columns_and_rows():
 
 def test_run_bayesian_rank_sum_deterministic_given_seed():
     df = _toy_df()
-    variables = ["NDE-MCQ_01_Since_NDE", "LCI_Appreciation of Life"]
+    variables = ["LCI_Appreciation of Life", "LCI_Self-Acceptance"]
     out_1 = run_bayesian_rank_sum(
         df=df,
         variables=variables,
@@ -75,9 +73,8 @@ def test_fixed_n_complete_case_has_constant_group_sizes():
     df = _toy_df()
     group_col = "valence_binary"
     variables = [
-        "NDE-MCQ_01_Since_NDE",
-        "NDE-MCQ_02_Since_NDE",
         "LCI_Appreciation of Life",
+        "LCI_Self-Acceptance",
     ]
 
     fixed_df = df[[group_col] + variables].dropna(axis=0)

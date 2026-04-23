@@ -175,12 +175,17 @@ def run_bayesian_rank_sum(
 ) -> pd.DataFrame:
     rows: list[dict] = []
 
+    def infer_domain(variable_name: str) -> str:
+        if variable_name.startswith("LCI_"):
+            return "LCI-R"
+        return "Outcome"
+
     for i, variable in enumerate(variables):
         if variable not in df.columns or group_col not in df.columns:
             rows.append(
                 {
                     "variable": variable,
-                    "domain": "NDE-MCQ" if variable.startswith("NDE-MCQ") else "LCI-R",
+                    "domain": infer_domain(variable),
                     "n_positive": 0,
                     "n_non_positive": 0,
                     "bf01": np.nan,
@@ -206,7 +211,7 @@ def run_bayesian_rank_sum(
             rows.append(
                 {
                     "variable": variable,
-                    "domain": "NDE-MCQ" if variable.startswith("NDE-MCQ") else "LCI-R",
+                    "domain": infer_domain(variable),
                     "n_positive": int(x.size),
                     "n_non_positive": int(y.size),
                     "bf01": np.nan,
@@ -232,7 +237,7 @@ def run_bayesian_rank_sum(
         rows.append(
             {
                 "variable": variable,
-                "domain": "NDE-MCQ" if variable.startswith("NDE-MCQ") else "LCI-R",
+                "domain": infer_domain(variable),
                 "n_positive": int(x.size),
                 "n_non_positive": int(y.size),
                 "bf01": result.bf01,
