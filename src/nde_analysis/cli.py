@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from dataclasses import replace
 import logging
 import os
 from pathlib import Path
@@ -9,10 +10,10 @@ import numpy as np
 import pandas as pd
 
 from nde_analysis.analysis.adjusted_effects import compare_full_vs_covariates
+from nde_analysis.analysis.bayesian_reporting import run_bayesian_reporting
 from nde_analysis.analysis.collinearity import compute_vif_table
 from nde_analysis.analysis.diagnostics import build_covariate_diagnostics
 from nde_analysis.analysis.post_effects_lci import run_lci_analyses
-from nde_analysis.analysis.post_effects_mcq import run_mcq_analyses
 from nde_analysis.analysis.valence_models import run_valence_models
 from nde_analysis.config import AppConfig, load_config
 from nde_analysis.io import ensure_directories, load_csv, write_table
@@ -31,18 +32,13 @@ from nde_analysis.plotting.lci_plots import (
     plot_lci_mean_pointplot,
     plot_lci_median_heatmap,
 )
-from nde_analysis.plotting.mcq_plots import (
-    plot_mcq_mean_pointplot,
-    plot_mcq_median_heatmap,
-)
 from nde_analysis.plotting.style import apply_plot_style
 from nde_analysis.plotting.valence_plots import (
     plot_odds_ratio_forest,
     plot_predicted_probabilities,
     plot_roc,
 )
-from nde_analysis.preprocess.mappings import MCQ_COLS
-from nde_analysis.preprocess.transform import preprocess_data
+from nde_analysis.preprocess.transform import PreprocessedData, preprocess_data
 from nde_analysis.reporting.render import render_report
 from nde_analysis.utils.logging import setup_logging
 
@@ -244,29 +240,21 @@ def run_valence_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
     }
 
 
-def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
-    mcq = run_mcq_analyses(prep.mcq_df)
+def run_post_effects_pipeline(
+    cfg: AppConfig, prep, variant_desc: str = "Variable-N"
+) -> dict[str, Path]:
     lci = run_lci_analyses(prep.lci_df, prep.lci_score_cols)
 
-    write_table(mcq.global_table, cfg.tables_dir / "mcq_global_change.csv")
-    write_table(mcq.by_valence_table, cfg.tables_dir / "mcq_by_valence.csv")
-    write_table(
-        mcq.response_distribution, cfg.tables_dir / "mcq_response_distribution.csv"
-    )
     write_table(lci.global_table, cfg.tables_dir / "lci_global_change.csv")
     write_table(lci.by_valence_table, cfg.tables_dir / "lci_by_valence.csv")
     write_table(lci.missingness_table, cfg.tables_dir / "lci_missingness.csv")
 
-    fig_mcq_heat = cfg.figures_dir / "mcq_median_heatmap_by_valence.png"
-    fig_mcq_point = cfg.figures_dir / "mcq_mean_change_by_valence.png"
     fig_lci_heat = cfg.figures_dir / "lci_median_heatmap_by_valence.png"
     fig_lci_point = cfg.figures_dir / "lci_mean_change_by_valence.png"
     fig_cov_kde = cfg.figures_dir / "covariates_overlap_kde_by_valence.png"
     fig_cov_box = cfg.figures_dir / "covariates_boxstrip_by_valence.png"
     fig_cov_sex = cfg.figures_dir / "covariates_sex_distribution_by_valence.png"
 
-    plot_mcq_median_heatmap(mcq.long_df, fig_mcq_heat, cfg.plot.dpi)
-    plot_mcq_mean_pointplot(mcq.long_df, fig_mcq_point, cfg.plot.dpi)
     plot_lci_median_heatmap(lci.long_df, fig_lci_heat, cfg.plot.dpi)
     plot_lci_mean_pointplot(lci.long_df, fig_lci_point, cfg.plot.dpi)
 
@@ -317,32 +305,16 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
     ]
     cov_cat = ["sex_Male"]
 
-    mcq_model_df = pd.concat([prep.analysis_df, prep.mcq_df[MCQ_COLS]], axis=1)
     lci_model_df = pd.concat(
         [prep.analysis_df, prep.lci_df[prep.lci_score_cols]], axis=1
     )
-    mcq_model_df = mcq_model_df.loc[:, ~mcq_model_df.columns.duplicated()].copy()
     lci_model_df = lci_model_df.loc[:, ~lci_model_df.columns.duplicated()].copy()
-    for df in (mcq_model_df, lci_model_df):
+    for df in (lci_model_df,):
         for c in cov_cont + cov_cat + ["valence_binary"]:
             if c in df.columns:
                 df[c] = pd.to_numeric(df[c], errors="coerce")
 
     # Explicit labels for reproducible report names.
-    mcq_comp = compare_full_vs_covariates(
-        model_df=mcq_model_df,
-        outcomes=MCQ_COLS,
-        outcome_labels={
-            "NDE-MCQ_01_Since_NDE": "Responsibility to help others",
-            "NDE-MCQ_02_Since_NDE": "Act by moral rules",
-            "NDE-MCQ_03_Since_NDE": "Consider others' perspectives",
-            "NDE-MCQ_04_Since_NDE": "Willingness to forgive others",
-            "NDE-MCQ_05_Since_NDE": "Consider long-term consequences",
-        },
-        continuous_covariates=cov_cont,
-        categorical_covariates=cov_cat,
-        min_n=cfg.analysis.min_n_models,
-    )
     lci_comp = compare_full_vs_covariates(
         model_df=lci_model_df,
         outcomes=prep.lci_score_cols,
@@ -350,16 +322,6 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         continuous_covariates=cov_cont,
         categorical_covariates=cov_cat,
         min_n=cfg.analysis.min_n_models,
-    )
-
-    write_table(mcq_comp.full_table, cfg.tables_dir / "mcq_adjusted_full_models.csv")
-    write_table(
-        mcq_comp.covariates_only_table,
-        cfg.tables_dir / "mcq_covariates_only_models.csv",
-    )
-    write_table(
-        mcq_comp.comparison_table,
-        cfg.tables_dir / "mcq_full_vs_covariates_comparison.csv",
     )
 
     write_table(lci_comp.full_table, cfg.tables_dir / "lci_adjusted_full_models.csv")
@@ -418,9 +380,6 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         "valence_adds_signal",
     ]
 
-    mcq_full_view = _select_columns(mcq_comp.full_table, full_cols)
-    mcq_cov_view = _select_columns(mcq_comp.covariates_only_table, cov_cols)
-    mcq_comp_view = _select_columns(mcq_comp.comparison_table, comp_cols)
     lci_full_view = _select_columns(lci_comp.full_table, full_cols)
     lci_cov_view = _select_columns(lci_comp.covariates_only_table, cov_cols)
     lci_comp_view = _select_columns(lci_comp.comparison_table, comp_cols)
@@ -451,28 +410,14 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         "delta_bic": "delta_BIC",
         "valence_adds_signal": "valence_adds_signal",
     }
-    mcq_full_view = mcq_full_view.rename(columns=rename_map)
-    mcq_cov_view = mcq_cov_view.rename(columns=rename_map)
-    mcq_comp_view = mcq_comp_view.rename(columns=rename_map)
     lci_full_view = lci_full_view.rename(columns=rename_map)
     lci_cov_view = lci_cov_view.rename(columns=rename_map)
     lci_comp_view = lci_comp_view.rename(columns=rename_map)
 
-    fig_mcq_delta = cfg.figures_dir / "mcq_adjusted_full_vs_covariates_delta.png"
     fig_lci_delta = cfg.figures_dir / "lci_adjusted_full_vs_covariates_delta.png"
-    fig_mcq_intercept_full = cfg.figures_dir / "mcq_adjusted_intercepts_full.png"
     fig_lci_intercept_full = cfg.figures_dir / "lci_adjusted_intercepts_full.png"
-    fig_mcq_intercept_cov = (
-        cfg.figures_dir / "mcq_adjusted_intercepts_covariates_only.png"
-    )
     fig_lci_intercept_cov = (
         cfg.figures_dir / "lci_adjusted_intercepts_covariates_only.png"
-    )
-    plot_adjusted_delta(
-        mcq_comp.comparison_table,
-        "NDE-MCQ: full model vs covariates-only (Delta R²)",
-        fig_mcq_delta,
-        cfg.plot.dpi,
     )
     plot_adjusted_delta(
         lci_comp.comparison_table,
@@ -481,21 +426,9 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         cfg.plot.dpi,
     )
     plot_intercepts(
-        mcq_comp.full_table,
-        "NDE-MCQ baseline levels (full adjusted model)",
-        fig_mcq_intercept_full,
-        cfg.plot.dpi,
-    )
-    plot_intercepts(
         lci_comp.full_table,
         "LCI-R baseline levels (full adjusted model)",
         fig_lci_intercept_full,
-        cfg.plot.dpi,
-    )
-    plot_intercepts(
-        mcq_comp.covariates_only_table,
-        "NDE-MCQ baseline levels (covariates-only model)",
-        fig_mcq_intercept_cov,
         cfg.plot.dpi,
     )
     plot_intercepts(
@@ -507,30 +440,7 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
 
     template_dir = Path(__file__).parent / "reporting" / "templates"
 
-    report_mcq = cfg.reports_dir / "02_post_effects_mcq_report.md"
-    render_report(
-        template_dir=template_dir,
-        template_name="post_effects_report.md.j2",
-        context={
-            "domain_name": "NDE-MCQ",
-            "global_table": _table_text(mcq.global_table),
-            "by_valence_table": _table_text(mcq.by_valence_table),
-            "full_table": _table_text(mcq_full_view),
-            "cov_only_table": _table_text(mcq_cov_view),
-            "comparison_table": _table_text(mcq_comp_view),
-            "figures": [
-                _relative_link(report_mcq, fig_mcq_heat),
-                _relative_link(report_mcq, fig_mcq_point),
-                _relative_link(report_mcq, fig_mcq_delta),
-                _relative_link(report_mcq, fig_mcq_intercept_full),
-                _relative_link(report_mcq, fig_mcq_intercept_cov),
-            ],
-            "interpretation": _interpret_post_effects(mcq_comp.comparison_table, "MCQ"),
-        },
-        output_path=report_mcq,
-    )
-
-    report_lci = cfg.reports_dir / "03_post_effects_lci_report.md"
+    report_lci = cfg.reports_dir / "02_post_effects_lci_report.md"
     render_report(
         template_dir=template_dir,
         template_name="post_effects_report.md.j2",
@@ -554,7 +464,7 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
     )
 
     # Combined adjusted comparison report.
-    report_adj = cfg.reports_dir / "04_adjusted_models_comparison_report.md"
+    report_adj = cfg.reports_dir / "03_adjusted_models_comparison_report.md"
     report_adj.write_text(
         "# Adjusted Models Comparison\n\n"
         "## LCI-R: Full vs Covariates-Only\n\n"
@@ -563,19 +473,11 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         + _relative_link(report_adj, fig_lci_intercept_full)
         + ")\n\n![LCI-R covariates-only intercepts]("
         + _relative_link(report_adj, fig_lci_intercept_cov)
-        + ")\n"
-        + "\n\n## NDE-MCQ: Full vs Covariates-Only\n\n"
-        + _table_text(mcq_comp_view)
-        + "\n\n![NDE-MCQ full-model intercepts]("
-        + _relative_link(report_adj, fig_mcq_intercept_full)
-        + ")\n\n![NDE-MCQ covariates-only intercepts]("
-        + _relative_link(report_adj, fig_mcq_intercept_cov)
-        + ")\n"
-        + "\n",
+        + ")\n\n",
         encoding="utf-8",
     )
 
-    report_cov = cfg.reports_dir / "05_covariate_diagnostics_report.md"
+    report_cov = cfg.reports_dir / "04_covariate_diagnostics_report.md"
     render_report(
         template_dir=template_dir,
         template_name="covariate_diagnostics_report.md.j2",
@@ -594,16 +496,21 @@ def run_post_effects_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         output_path=report_cov,
     )
 
+    bayes = run_bayesian_reporting(
+        prep,
+        tables_dir=cfg.tables_dir,
+        reports_dir=cfg.reports_dir,
+        seed=cfg.reproducibility.seed,
+        n_iter=300,
+        burn=100,
+        variant_desc=variant_desc,
+    )
+
     return {
-        "report_mcq": report_mcq,
         "report_lci": report_lci,
         "report_adj": report_adj,
         "report_cov": report_cov,
-        "fig_mcq_heat": fig_mcq_heat,
-        "fig_mcq_point": fig_mcq_point,
-        "fig_mcq_delta": fig_mcq_delta,
-        "fig_mcq_intercept_full": fig_mcq_intercept_full,
-        "fig_mcq_intercept_cov": fig_mcq_intercept_cov,
+        "report_bayes": bayes["report"],
         "fig_lci_heat": fig_lci_heat,
         "fig_lci_point": fig_lci_point,
         "fig_lci_delta": fig_lci_delta,
@@ -629,7 +536,7 @@ def _parse_args() -> argparse.Namespace:
 
     add_common(sub.add_parser("run-all", help="Run full pipeline"))
     add_common(sub.add_parser("run-valence", help="Run valence models only"))
-    add_common(sub.add_parser("run-post-effects", help="Run MCQ/LCI analyses only"))
+    add_common(sub.add_parser("run-post-effects", help="Run LCI analyses only"))
     return parser.parse_args()
 
 
@@ -646,25 +553,44 @@ def _prepare_config(args: argparse.Namespace) -> AppConfig:
     return cfg
 
 
-def main() -> None:
-    setup_logging()
-    args = _parse_args()
-    cfg = _prepare_config(args)
+def _fixed_complete_case(prep: PreprocessedData) -> PreprocessedData:
+    analysis_complete = prep.analysis_df.notna().all(axis=1)
+    lci_complete = (
+        prep.lci_df[["valence_binary", *prep.lci_score_cols]].notna().all(axis=1)
+    )
+    mask = analysis_complete & lci_complete
 
-    ensure_directories(cfg.output_dir, cfg.figures_dir, cfg.tables_dir, cfg.reports_dir)
-    apply_plot_style(cfg.plot.style)
-
-    np.random.seed(cfg.reproducibility.seed)
-
-    raw = load_csv(cfg.data_path)
-    prep = preprocess_data(
-        raw, lci_min_valid_fraction=cfg.analysis.lci_min_valid_fraction
+    return PreprocessedData(
+        raw_df=prep.raw_df.loc[mask].copy(),
+        analysis_df=prep.analysis_df.loc[mask].copy(),
+        analysis_pretransform_df=prep.analysis_pretransform_df.loc[mask].copy(),
+        lci_df=prep.lci_df.loc[mask].copy(),
+        lci_score_cols=prep.lci_score_cols,
     )
 
+
+def _variant_config(base_cfg: AppConfig, variant: str) -> AppConfig:
+    variant_root = base_cfg.output_dir / variant
+    return replace(
+        base_cfg,
+        output_dir=variant_root,
+        figures_dir=variant_root / "figures",
+        tables_dir=variant_root / "tables",
+        reports_dir=variant_root / "reports",
+    )
+
+
+def _run_variant(
+    cfg: AppConfig,
+    prep,
+    command: str,
+    variant_desc: str,
+) -> tuple[list[Path], list[Path]]:
+    ensure_directories(cfg.output_dir, cfg.figures_dir, cfg.tables_dir, cfg.reports_dir)
     generated_reports: list[Path] = []
     generated_figures: list[Path] = []
 
-    if args.command in {"run-all", "run-valence"}:
+    if command in {"run-all", "run-valence"}:
         out_valence = run_valence_pipeline(cfg, prep)
         generated_reports.append(out_valence["report"])
         generated_figures.extend(
@@ -679,23 +605,18 @@ def main() -> None:
             ]
         )
 
-    if args.command in {"run-all", "run-post-effects"}:
-        out_post = run_post_effects_pipeline(cfg, prep)
+    if command in {"run-all", "run-post-effects"}:
+        out_post = run_post_effects_pipeline(cfg, prep, variant_desc=variant_desc)
         generated_reports.extend(
             [
-                out_post["report_mcq"],
                 out_post["report_lci"],
                 out_post["report_adj"],
                 out_post["report_cov"],
+                out_post["report_bayes"],
             ]
         )
         generated_figures.extend(
             [
-                out_post["fig_mcq_heat"],
-                out_post["fig_mcq_point"],
-                out_post["fig_mcq_delta"],
-                out_post["fig_mcq_intercept_full"],
-                out_post["fig_mcq_intercept_cov"],
                 out_post["fig_lci_heat"],
                 out_post["fig_lci_point"],
                 out_post["fig_lci_delta"],
@@ -722,8 +643,43 @@ def main() -> None:
         },
         output_path=summary_report,
     )
+    generated_reports.insert(0, summary_report)
+    return generated_reports, generated_figures
 
-    LOGGER.info("Run complete. Summary report: %s", summary_report)
+
+def main() -> None:
+    setup_logging()
+    args = _parse_args()
+    cfg = _prepare_config(args)
+
+    apply_plot_style(cfg.plot.style)
+
+    np.random.seed(cfg.reproducibility.seed)
+
+    raw = load_csv(cfg.data_path)
+    prep = preprocess_data(
+        raw, lci_min_valid_fraction=cfg.analysis.lci_min_valid_fraction
+    )
+
+    variable_cfg = _variant_config(cfg, "variable_n")
+    fixed_cfg = _variant_config(cfg, "fixed_n_complete_case")
+    fixed_prep = _fixed_complete_case(prep)
+
+    variable_reports, _ = _run_variant(
+        variable_cfg,
+        prep,
+        command=args.command,
+        variant_desc="Variable-N (available-case per outcome)",
+    )
+    fixed_reports, _ = _run_variant(
+        fixed_cfg,
+        fixed_prep,
+        command=args.command,
+        variant_desc="Fixed-N complete-case (rows with missing values removed upfront)",
+    )
+
+    LOGGER.info("Run complete. Variable summary: %s", variable_reports[0])
+    LOGGER.info("Run complete. Fixed summary: %s", fixed_reports[0])
 
 
 if __name__ == "__main__":

@@ -17,32 +17,6 @@ ERQ_LIKERT_MAP = {
     "Totally agree": 7,
 }
 
-MCQ_COLS = [f"NDE-MCQ_{i:02d}_Since_NDE" for i in range(1, 6)]
-
-MCQ_ITEM_LABELS = {
-    "NDE-MCQ_01_Since_NDE": "Responsibility to help others",
-    "NDE-MCQ_02_Since_NDE": "Act by moral rules",
-    "NDE-MCQ_03_Since_NDE": "Consider others' perspectives",
-    "NDE-MCQ_04_Since_NDE": "Willingness to forgive others",
-    "NDE-MCQ_05_Since_NDE": "Consider long-term consequences",
-}
-
-MCQ_MAP = {
-    "Strongly diminished": -2,
-    "Decreased": -1,
-    "Not changed": 0,
-    "Increased": 1,
-    "Strongly increased": 2,
-}
-
-MCQ_VALUE_LABELS = {
-    -2: "Strongly diminished",
-    -1: "Decreased",
-    0: "Not changed",
-    1: "Increased",
-    2: "Strongly increased",
-}
-
 EDUCATION_MAP = {
     "No formal education": 0,
     "Primary education": 1,
