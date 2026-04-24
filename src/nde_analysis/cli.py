@@ -241,7 +241,10 @@ def run_valence_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
 
 
 def run_post_effects_pipeline(
-    cfg: AppConfig, prep, variant_desc: str = "Variable-N"
+    cfg: AppConfig,
+    prep,
+    variant_desc: str = "Variable-N",
+    covariate_complete_case: bool = False,
 ) -> dict[str, Path]:
     lci = run_lci_analyses(prep.lci_df, prep.lci_score_cols)
 
@@ -261,7 +264,7 @@ def run_post_effects_pipeline(
     cov_diag = build_covariate_diagnostics(
         prep.analysis_df,
         analysis_pretransform_df=prep.analysis_pretransform_df,
-        complete_case=True,
+        complete_case=covariate_complete_case,
     )
     overlap_vars = [
         "age",
@@ -478,10 +481,22 @@ def run_post_effects_pipeline(
     )
 
     report_cov = cfg.reports_dir / "04_covariate_diagnostics_report.md"
+    if covariate_complete_case:
+        analysis_sample_desc = (
+            "complete-case intersection across `valence_binary`, `sex_Male`, "
+            "`age`, `CTQ_IM_SCORE`, `ADHD_SCALE`, `ERQ_reappraisal`, "
+            "`ERQ_suppression`, and `education_ord`."
+        )
+    else:
+        analysis_sample_desc = (
+            "available-case per variable (N varies by covariate and by valence "
+            "group for descriptive summaries and non-parametric balance tests)."
+        )
     render_report(
         template_dir=template_dir,
         template_name="covariate_diagnostics_report.md.j2",
         context={
+            "analysis_sample_desc": analysis_sample_desc,
             "overall_table": _table_text(cov_diag.overall_table),
             "overall_categorical_table": _table_text(
                 cov_diag.overall_categorical_table
@@ -585,6 +600,7 @@ def _run_variant(
     prep,
     command: str,
     variant_desc: str,
+    covariate_complete_case: bool,
 ) -> tuple[list[Path], list[Path]]:
     ensure_directories(cfg.output_dir, cfg.figures_dir, cfg.tables_dir, cfg.reports_dir)
     generated_reports: list[Path] = []
@@ -606,7 +622,12 @@ def _run_variant(
         )
 
     if command in {"run-all", "run-post-effects"}:
-        out_post = run_post_effects_pipeline(cfg, prep, variant_desc=variant_desc)
+        out_post = run_post_effects_pipeline(
+            cfg,
+            prep,
+            variant_desc=variant_desc,
+            covariate_complete_case=covariate_complete_case,
+        )
         generated_reports.extend(
             [
                 out_post["report_lci"],
@@ -670,12 +691,14 @@ def main() -> None:
         prep,
         command=args.command,
         variant_desc="Variable-N (available-case per outcome)",
+        covariate_complete_case=False,
     )
     fixed_reports, _ = _run_variant(
         fixed_cfg,
         fixed_prep,
         command=args.command,
         variant_desc="Fixed-N complete-case (rows with missing values removed upfront)",
+        covariate_complete_case=True,
     )
 
     LOGGER.info("Run complete. Variable summary: %s", variable_reports[0])

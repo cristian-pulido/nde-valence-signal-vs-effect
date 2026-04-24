@@ -9,8 +9,6 @@
 ## Generated Reports
 
 
-- `outputs/latest/variable_n/reports/01_valence_multivariate_report.md`
-
 - `outputs/latest/variable_n/reports/02_post_effects_lci_report.md`
 
 - `outputs/latest/variable_n/reports/03_adjusted_models_comparison_report.md`
@@ -22,20 +20,6 @@
 
 ## Generated Figures
 
-
-- `outputs/latest/variable_n/figures/valence_model1_or_forest.png`
-
-- `outputs/latest/variable_n/figures/valence_model2_or_forest.png`
-
-- `outputs/latest/variable_n/figures/valence_model3_or_forest.png`
-
-- `outputs/latest/variable_n/figures/valence_model3_roc.png`
-
-- `outputs/latest/variable_n/figures/valence_model3_predicted_probabilities.png`
-
-- `outputs/latest/variable_n/figures/valence_multicollinearity_vif.png`
-
-- `outputs/latest/variable_n/figures/valence_predictor_correlation_heatmap.png`
 
 - `outputs/latest/variable_n/figures/lci_median_heatmap_by_valence.png`
 
