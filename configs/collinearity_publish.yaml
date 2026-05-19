@@ -1,0 +1,21 @@
+input:
+  data_path: ../../DATA/data_for_model.csv
+
+output:
+  output_dir: outputs/collinearity_publish
+  figures_dir: outputs/collinearity_publish/figures
+  tables_dir: outputs/collinearity_publish/tables
+  reports_dir: outputs/collinearity_publish/reports
+
+plot:
+  format: png
+  dpi: 220
+  style: whitegrid
+
+analysis:
+  min_n_models: 30
+  lci_min_valid_fraction: 0.5
+  alpha: 0.05
+
+reproducibility:
+  seed: 42
