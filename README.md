@@ -81,6 +81,36 @@ nde-analysis run-post-effects --config configs/default.yaml --output-dir ../../D
 
 This also runs both Bayesian rank-sum variants.
 
+### Collinearity only (3 dx versions)
+
+```bash
+nde-analysis run-collinearity --config configs/default.yaml --output-dir ../../DATA/Results
+```
+
+For publication-ready outputs stored inside the repository, run:
+
+```bash
+PYTHONPATH=src python scripts/run_collinearity_publish.py
+```
+
+This uses `configs/collinearity_publish.yaml` and writes outputs to `outputs/collinearity_publish/`.
+
+This mode runs only multicollinearity diagnostics and exports three versions:
+
+- `v1_dx_joint`: `dx_prior_NDE` + `dx_prior_NDE_specify`
+- `v2_dx_prior_only`: only `dx_prior_NDE`
+- `v3_dx_specify_only`: only `dx_prior_NDE_specify`
+
+Outputs are written under:
+
+- `<output-dir>/collinearity_only/figures`
+- `<output-dir>/collinearity_only/tables`
+- `<output-dir>/collinearity_only/reports`
+
+Presentation source document (English):
+
+- `COLLINEARITY_PRESENTATION_INPUT.md`
+
 ## Output structure
 
 Each habitual run writes two fully separated analysis trees:

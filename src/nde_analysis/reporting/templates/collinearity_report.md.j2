@@ -1,0 +1,27 @@
+# Collinearity-Only Report (3 dx versions)
+
+This report embeds the VIF and Spearman diagnostics for each requested specification.
+
+{% for block in report_blocks %}
+## {{ block.variant_id }} — {{ block.variant_label }}
+
+- Rows used for diagnostics: {{ block.n_rows }}
+- Predictors in design matrix: {{ block.predictor_count }}
+
+### VIF Table
+
+{{ block.vif_table }}
+
+### VIF Figure
+
+![VIF {{ block.variant_id }}]({{ block.fig_vif }})
+
+### Spearman Correlation Table
+
+{{ block.corr_table }}
+
+### Spearman Heatmap
+
+![Spearman heatmap {{ block.variant_id }}]({{ block.fig_corr }})
+
+{% endfor %}

@@ -28,6 +28,50 @@ class PreprocessedData:
     lci_score_cols: list[str]
 
 
+def preprocess_collinearity_data(df: pd.DataFrame) -> pd.DataFrame:
+    data = df.copy()
+    needed = [
+        "valence",
+        "CTQ_IM_SCORE",
+        "CTQ_PA_SCORE",
+        "CTQ_SA_SCORE",
+        "CTQ_EN_SCORE",
+        "CTQ_PN_SCORE",
+        "greyson_total_no_affective",
+        "age_first_NDE",
+        "sex",
+        "education",
+        "dx_prior_NDE",
+        "dx_prior_NDE_specify",
+        "death_context_nature",
+    ]
+    require_columns(data, needed, context="preprocess_collinearity")
+
+    data = data[data["valence"].isin(["Positive", "Mixed", "Negative"])].copy()
+    data["valence_binary"] = data["valence"].map(VALENCE_MAP)
+
+    data["education_ord"] = data["education"].map(EDUCATION_MAP)
+    data["sex_Male"] = (data["sex"].astype(str).str.lower() == "male").astype(int)
+
+    for col in [
+        "CTQ_IM_SCORE",
+        "CTQ_PA_SCORE",
+        "CTQ_SA_SCORE",
+        "CTQ_EN_SCORE",
+        "CTQ_PN_SCORE",
+        "greyson_total_no_affective",
+        "age_first_NDE",
+        "education_ord",
+        "valence_binary",
+    ]:
+        data[col] = pd.to_numeric(data[col], errors="coerce")
+
+    data["dx_prior_NDE"] = data["dx_prior_NDE"].astype(str)
+    data["dx_prior_NDE_specify"] = data["dx_prior_NDE_specify"].astype(str)
+    data["death_context_nature"] = data["death_context_nature"].astype(str)
+    return data
+
+
 def _zscore(series: pd.Series) -> pd.Series:
     if series.dropna().empty:
         return series

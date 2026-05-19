@@ -39,6 +39,7 @@ from nde_analysis.plotting.valence_plots import (
     plot_roc,
 )
 from nde_analysis.preprocess.transform import PreprocessedData, preprocess_data
+from nde_analysis.preprocess.transform import preprocess_collinearity_data
 from nde_analysis.reporting.render import render_report
 from nde_analysis.utils.logging import setup_logging
 
@@ -104,6 +105,151 @@ def _interpret_covariate_balance(balance_df: pd.DataFrame) -> str:
         f"{significant} covariates were imbalanced at FDR-adjusted p<0.05 and {near_imbalance} at FDR-adjusted p<0.10. "
         "Distribution overlap plots and balance tests jointly support whether adjusted analysis is plausible."
     )
+
+
+def _collinearity_design_matrix(
+    df: pd.DataFrame,
+    include_dx_prior: bool,
+    include_dx_specify: bool,
+) -> pd.DataFrame:
+    base_cols = [
+        "CTQ_IM_SCORE",
+        "greyson_total_no_affective",
+        "age_first_NDE",
+        "education_ord",
+        "sex_Male",
+        "valence_binary",
+    ]
+    use = df[base_cols].copy()
+
+    dummy_frames: list[pd.DataFrame] = []
+    if include_dx_prior:
+        dummy_frames.append(
+            pd.get_dummies(
+                df["dx_prior_NDE"],
+                prefix="dx_prior_NDE",
+                drop_first=True,
+                dtype=float,
+            )
+        )
+    if include_dx_specify:
+        dummy_frames.append(
+            pd.get_dummies(
+                df["dx_prior_NDE_specify"],
+                prefix="dx_prior_NDE_specify",
+                drop_first=True,
+                dtype=float,
+            )
+        )
+    dummy_frames.append(
+        pd.get_dummies(
+            df["death_context_nature"],
+            prefix="death_context_nature",
+            drop_first=True,
+            dtype=float,
+        )
+    )
+
+    if dummy_frames:
+        use = pd.concat([use] + dummy_frames, axis=1)
+
+    use = use.apply(pd.to_numeric, errors="coerce")
+    use = use.loc[:, use.nunique(dropna=True) > 1]
+    return use
+
+
+def run_collinearity_pipeline(cfg: AppConfig, raw_df: pd.DataFrame) -> dict[str, Path]:
+    data = preprocess_collinearity_data(raw_df)
+
+    variants = {
+        "v1_dx_joint": {
+            "include_dx_prior": True,
+            "include_dx_specify": True,
+            "label": "dx_prior_NDE + dx_prior_NDE_specify",
+        },
+        "v2_dx_prior_only": {
+            "include_dx_prior": True,
+            "include_dx_specify": False,
+            "label": "dx_prior_NDE only",
+        },
+        "v3_dx_specify_only": {
+            "include_dx_prior": False,
+            "include_dx_specify": True,
+            "label": "dx_prior_NDE_specify only",
+        },
+    }
+
+    generated_tables: list[Path] = []
+    generated_figures: list[Path] = []
+    report_blocks: list[dict[str, str]] = []
+    report = cfg.reports_dir / "01_collinearity_report.md"
+
+    for variant_id, variant in variants.items():
+        design = _collinearity_design_matrix(
+            data,
+            include_dx_prior=variant["include_dx_prior"],
+            include_dx_specify=variant["include_dx_specify"],
+        )
+        vif_table = compute_vif_table(design, list(design.columns))
+        corr_df = design.corr(method="spearman")
+
+        t_vif = cfg.tables_dir / f"collinearity_vif_{variant_id}.csv"
+        t_corr = cfg.tables_dir / f"collinearity_spearman_{variant_id}.csv"
+        write_table(vif_table, t_vif)
+        write_table(corr_df.reset_index().rename(columns={"index": "predictor"}), t_corr)
+
+        fig_vif = cfg.figures_dir / f"collinearity_vif_{variant_id}.png"
+        fig_corr = cfg.figures_dir / f"collinearity_heatmap_{variant_id}.png"
+        plot_vif(vif_table, f"VIF ({variant['label']})", fig_vif, cfg.plot.dpi)
+        plot_correlation_heatmap(
+            corr_df,
+            f"Spearman Correlation ({variant['label']})",
+            fig_corr,
+            cfg.plot.dpi,
+        )
+
+        generated_tables.extend([t_vif, t_corr])
+        generated_figures.extend([fig_vif, fig_corr])
+        report_blocks.append(
+            {
+                "variant_id": variant_id,
+                "variant_label": variant["label"],
+                "predictor_count": str(design.shape[1]),
+                "n_rows": str(design.shape[0]),
+                "vif_table": _table_text(vif_table),
+                "corr_table": _table_text(
+                    corr_df.reset_index().rename(columns={"index": "predictor"})
+                ),
+                "fig_vif": _relative_link(report, fig_vif),
+                "fig_corr": _relative_link(report, fig_corr),
+            }
+        )
+
+    render_report(
+        template_dir=Path(__file__).parent / "reporting" / "templates",
+        template_name="collinearity_report.md.j2",
+        context={
+            "report_blocks": report_blocks,
+        },
+        output_path=report,
+    )
+
+    summary_report = cfg.reports_dir / "00_run_summary.md"
+    render_report(
+        template_dir=Path(__file__).parent / "reporting" / "templates",
+        template_name="run_summary.md.j2",
+        context={
+            "data_path": str(cfg.data_path),
+            "output_dir": str(cfg.output_dir),
+            "figures_dir": str(cfg.figures_dir),
+            "tables_dir": str(cfg.tables_dir),
+            "reports_dir": str(cfg.reports_dir),
+            "reports": [str(summary_report), str(report)],
+            "figures": [str(p) for p in generated_figures],
+        },
+        output_path=summary_report,
+    )
+    return {"summary": summary_report, "report": report}
 
 
 def run_valence_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
@@ -552,6 +698,7 @@ def _parse_args() -> argparse.Namespace:
     add_common(sub.add_parser("run-all", help="Run full pipeline"))
     add_common(sub.add_parser("run-valence", help="Run valence models only"))
     add_common(sub.add_parser("run-post-effects", help="Run LCI analyses only"))
+    add_common(sub.add_parser("run-collinearity", help="Run collinearity diagnostics only"))
     return parser.parse_args()
 
 
@@ -678,6 +825,19 @@ def main() -> None:
     np.random.seed(cfg.reproducibility.seed)
 
     raw = load_csv(cfg.data_path)
+
+    if args.command == "run-collinearity":
+        col_cfg = _variant_config(cfg, "collinearity_only")
+        ensure_directories(
+            col_cfg.output_dir,
+            col_cfg.figures_dir,
+            col_cfg.tables_dir,
+            col_cfg.reports_dir,
+        )
+        out = run_collinearity_pipeline(col_cfg, raw)
+        LOGGER.info("Collinearity-only run complete. Summary: %s", out["summary"])
+        return
+
     prep = preprocess_data(
         raw, lci_min_valid_fraction=cfg.analysis.lci_min_valid_fraction
     )
