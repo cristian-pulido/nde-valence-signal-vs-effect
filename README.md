@@ -4,15 +4,14 @@ This repository provides a complete command-line workflow to analyze near-death 
 
 The pipeline answers two main analytical questions:
 
-1. Which demographic, psychological, and experiential variables independently predict NDE valence?
+1. Which demographic, diagnosis-history, death-context, and experiential variables independently predict NDE valence?
 2. How do post-NDE life-change outcomes behave globally, by valence group, and after covariate adjustment?
 
 ## Direct access to latest article results
 
 For reviewers, the most recent analysis outputs reported in the article are available under:
 
-- [`outputs/latest/variable_n/reports/`](outputs/latest/variable_n/reports/)
-- [`outputs/latest/fixed_n_complete_case/reports/`](outputs/latest/fixed_n_complete_case/reports/)
+- [`outputs/latest/main/reports/`](outputs/latest/main/reports/)
 
 ## Analytical scope
 
@@ -20,17 +19,15 @@ The workflow includes:
 
 - **Valence modeling** (binary logistic regression; hierarchical models)
   - Model 1: demographics
-  - Model 2: demographics + psychological predictors
-  - Model 3: demographics + psychological + experiential predictor
+  - Model 2: demographics + diagnosis history + death context
+  - Model 3: Model 2 + experiential predictor
 - **Collinearity and dependency diagnostics**
   - Variance Inflation Factor (VIF), including `valence_binary`
   - Spearman correlation heatmap across predictors
 - **Post-NDE effects: unadjusted analyses**
   - LCI-R section scores: Wilcoxon and valence-group Mann-Whitney tests
   - Multiple testing control with Benjamini-Hochberg FDR correction within each hypothesis family
-  - Bayesian rank-sum inference in two modes:
-    - Variable-N (available-case per outcome)
-    - Fixed-N complete-case (rows with any missing selected outcomes removed before testing)
+  - Bayesian rank-sum inference
 - **Post-NDE effects: adjusted analyses**
   - Full model: `outcome ~ valence_binary + covariates`
   - Covariates-only model: `outcome ~ covariates`
@@ -65,7 +62,7 @@ pip install -e .
 nde-analysis run-all --config configs/default.yaml --output-dir ../../DATA/Results
 ```
 
-This includes valence modeling, LCI post-effects/adjusted diagnostics, and both Bayesian rank-sum variants.
+This includes valence modeling, LCI post-effects/adjusted diagnostics, and Bayesian rank-sum inference.
 
 ### Valence module only
 
@@ -79,7 +76,7 @@ nde-analysis run-valence --config configs/default.yaml --output-dir ../../DATA/R
 nde-analysis run-post-effects --config configs/default.yaml --output-dir ../../DATA/Results
 ```
 
-This also runs both Bayesian rank-sum variants.
+This also runs Bayesian rank-sum inference.
 
 ### Collinearity only (3 dx versions)
 
@@ -113,10 +110,9 @@ Presentation source document (English):
 
 ## Output structure
 
-Each habitual run writes two fully separated analysis trees:
+Each habitual run writes one analysis tree:
 
-- `<output-dir>/variable_n/{figures,tables,reports}`
-- `<output-dir>/fixed_n_complete_case/{figures,tables,reports}`
+- `<output-dir>/main/{figures,tables,reports}`
 
 All figures are exported as PNG.
 
@@ -139,13 +135,12 @@ Reports include methodology, key tables, embedded figures, and interpretation bl
 
 - **Valence recoding:** `Positive = 1`, `Mixed/Negative = 0`
 - **LCI coding:** ordinal labels mapped to numeric change scores
-- **ERQ scoring:** reappraisal and suppression subscales derived from item means
 - **Missingness handling:** complete-case per model/outcome
-- **Covariate diagnostics sample:** complete-case intersection over balance covariates (`valence_binary`, `sex_Male`, `age`, `CTQ_IM_SCORE`, `ADHD_SCALE`, `ERQ_reappraisal`, `ERQ_suppression`, `education_ord`)
+- **Covariate diagnostics sample:** complete-case intersection over balance covariates (`valence_binary`, `sex_Male`, `age_first_NDE`, `CTQ_IM_SCORE`, `education_ord`, `dx_prior_NDE_Yes`, plus death-context dummies)
 - **Multiple testing correction:** Benjamini-Hochberg FDR (`fdr_bh`, alpha=0.05) applied to families of related p-values
 - **Adjusted model covariates:**
-  - Continuous/ordinal: `age`, `CTQ_IM_SCORE`, `ADHD_SCALE`, `ERQ_reappraisal`, `ERQ_suppression`, `education_ord`, `greyson_total_no_affective`
-  - Categorical: `sex_Male`
+  - Continuous/ordinal: `age_first_NDE`, `CTQ_IM_SCORE`, `education_ord`, `dx_prior_NDE_Yes`, `greyson_total_no_affective`
+  - Categorical: `sex_Male` + death-context dummies
 
 ## Statistical output columns
 

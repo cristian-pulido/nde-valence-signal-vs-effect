@@ -2,7 +2,7 @@
 
 ## Research Question
 
-Do demographic, psychological, and experiential variables independently predict NDE valence?
+Do demographic, clinical-history, context, and experiential variables independently predict NDE valence?
 
 ## Valence Class Distribution
 
@@ -21,8 +21,8 @@ Mixed and Negative categories are grouped into a single non-positive class to en
 - Outcome: binary valence (`Positive = 1`, `Mixed/Negative = 0`).
 - Models: hierarchical logistic regression.
   - Model 1: demographics only.
-  - Model 2: demographics + psychological factors.
-  - Model 3: demographics + psychological + experiential factor.
+  - Model 2: demographics + diagnosis history + death-context structure.
+  - Model 3: Model 2 + experiential factor.
 - Missing data handling: complete-case per model.
 - Fit diagnostics: pseudo-R² and likelihood-ratio tests.
 - Multiple-testing control: Benjamini-Hochberg FDR correction for predictor-level and model-comparison p-values.
@@ -37,7 +37,7 @@ Mixed and Negative categories are grouped into a single non-positive class to en
 
 ## Multicollinearity Diagnostics (VIF)
 
-VIF is computed using valence, demographic variables, CTQ subscales, ADHD, ERQ scores, and Greyson non-affective score.
+VIF is computed using valence, demographic variables, CTQ subscales, diagnosis status, death-context dummies, and Greyson non-affective score.
 
 {{ vif_table }}
 

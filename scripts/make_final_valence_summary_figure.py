@@ -46,12 +46,19 @@ OUTCOME_SPECS: list[OutcomeSpec] = [
 
 PREDICTOR_SPECS: list[PredictorSpec] = [
     PredictorSpec("valence_binary", "Valence"),
-    PredictorSpec("age", "Age"),
+    PredictorSpec("age_first_NDE", "Age at first NDE"),
     PredictorSpec("sex_Male", "Sex (male)"),
     PredictorSpec("education_ord", "Education"),
     PredictorSpec("CTQ_IM_SCORE", "CTQ"),
-    PredictorSpec("ADHD_SCALE", "ASRS (ADHD)"),
-    PredictorSpec("ERQ_total", "ERQ total"),
+    PredictorSpec("dx_prior_NDE_Yes", "Prior diagnosis"),
+    PredictorSpec(
+        "death_context_nature_objective_medical_context",
+        "Context: objective medical",
+    ),
+    PredictorSpec(
+        "death_context_nature_subjective_threat_only",
+        "Context: subjective threat",
+    ),
     PredictorSpec("greyson_total_no_affective", "Greyson\nnon-affective"),
 ]
 
@@ -206,7 +213,6 @@ def _prepare_panel_c_data(prep) -> tuple[pd.DataFrame, pd.DataFrame]:
     predictor_map = {spec.column: spec.display_name for spec in PREDICTOR_SPECS}
 
     model_df = prep.analysis_df.copy()
-    model_df["ERQ_total"] = model_df[["ERQ_reappraisal", "ERQ_suppression"]].mean(axis=1)
     model_df = pd.concat([model_df, prep.lci_df[prep.lci_score_cols]], axis=1)
     model_df = model_df.loc[:, ~model_df.columns.duplicated()].copy()
 
@@ -296,18 +302,22 @@ def _apply_publication_style() -> None:
             "figure.facecolor": "white",
             "axes.facecolor": "white",
             "savefig.facecolor": "white",
-            "axes.edgecolor": "#444444",
+            "axes.edgecolor": "#8F8F8F",
             "axes.labelcolor": "#222222",
             "xtick.color": "#222222",
             "ytick.color": "#222222",
             "text.color": "#222222",
-            "axes.titlesize": 17,
-            "axes.labelsize": 15,
-            "xtick.labelsize": 13,
-            "ytick.labelsize": 13,
-            "legend.fontsize": 13,
+            "axes.titlesize": 19,
+            "axes.labelsize": 14,
+            "xtick.labelsize": 11,
+            "ytick.labelsize": 11,
+            "legend.fontsize": 11,
             "axes.spines.top": False,
             "axes.spines.right": False,
+            "axes.grid": True,
+            "grid.color": "#C8C8C8",
+            "grid.linewidth": 0.7,
+            "grid.alpha": 1.0,
         }
     )
 
@@ -326,7 +336,7 @@ def _build_figure(
         1,
         3,
         figsize=(18.6, 8.0),
-        gridspec_kw={"width_ratios": [1.35, 0.95, 1.05]},
+        gridspec_kw={"width_ratios": [1.45, 1.05, 1.25]},
         constrained_layout=True,
     )
 
@@ -412,8 +422,8 @@ def _build_figure(
     ax.set_yticklabels(panel_a_df["display_name"])
     ax.invert_yaxis()
     ax.set_xlabel("Mean change (0 = no change)")
-    ax.set_title("A. Mean change by valence", loc="left", pad=6)
-    ax.grid(axis="x", color="#E8E8E8", linewidth=0.8)
+    ax.set_title("B. Mean change by valence", loc="left", pad=6)
+    ax.grid(axis="x", color="#C8C8C8", linewidth=0.7)
     ax.grid(axis="y", visible=False)
 
     valence_handles = [
@@ -449,8 +459,8 @@ def _build_figure(
     ax.legend(
         handles=valence_handles,
         loc="upper left",
-        bbox_to_anchor=(0.01, 0.92),
-        ncol=2,
+        bbox_to_anchor=(0.02, 0.92),
+        ncol=1,
         frameon=False,
         borderaxespad=0.0,
         handletextpad=0.5,
@@ -468,7 +478,7 @@ def _build_figure(
         edgecolor="white",
         linewidth=0.8,
         height=0.68,
-        label="Base R2 (covariates)",
+        label=r"Base $R^2$ (covariates)",
     )
     ax.barh(
         y2,
@@ -478,15 +488,15 @@ def _build_figure(
         edgecolor="white",
         linewidth=0.8,
         height=0.68,
-        label="Delta R2 (valence)",
+        label=r"$\Delta R^2$ (valence)",
     )
     ax.set_yticks(y2)
     ax.set_yticklabels([])
     ax.tick_params(axis="y", length=0)
     ax.invert_yaxis()
-    ax.set_xlabel("Total R2 (base + increment)")
-    ax.set_title("B. Base R2 and increment from valence", loc="left", pad=6)
-    ax.grid(axis="x", color="#E8E8E8", linewidth=0.8)
+    ax.set_xlabel(r"Total $R^2$ (base + increment)")
+    ax.set_title(r"C. Base $R^2$ and $\Delta R^2$ from valence", loc="left", pad=6)
+    ax.grid(axis="x", color="#C8C8C8", linewidth=0.7)
     ax.grid(axis="y", visible=False)
     max_r2 = float(panel_b_df["r2_full"].max())
     ax.set_xlim(0, max(0.06, max_r2 * 1.22))
@@ -504,7 +514,7 @@ def _build_figure(
         ax.text(
             x_text,
             idx,
-            f"R2={r2_full:.3f}",
+            rf"$R^2$={r2_full:.3f}",
             va="center",
             ha=ha_text,
             fontsize=10.5,
@@ -512,8 +522,8 @@ def _build_figure(
         )
 
     panel_b_handles = [
-        mpl.patches.Patch(facecolor=delta_color, edgecolor="none", label="Delta R2 (valence)"),
-        mpl.patches.Patch(facecolor=base_color, edgecolor="none", label="Base R2 (covariates)"),
+        mpl.patches.Patch(facecolor=delta_color, edgecolor="none", label=r"$\Delta R^2$ (valence)"),
+        mpl.patches.Patch(facecolor=base_color, edgecolor="none", label=r"Base $R^2$ (covariates)"),
     ]
     ax.legend(
         handles=panel_b_handles,
@@ -531,14 +541,14 @@ def _build_figure(
         axes[0].text(
             0.58,
             0.02,
-            "No Delta R2\nsurvives FDR\ncorrection\n(all q > 0.05)",
+            "No $\\Delta R^2$\nsurvives FDR\ncorrection\n(all q > 0.05)",
             transform=axes[0].transAxes,
             ha="left",
             va="bottom",
             fontsize=12.5,
             color="#5C5C5C",
             style="italic",
-            bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.85, "pad": 2.0},
+            bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.88, "pad": 1.2},
         )
         axes[0].annotate(
             "",
@@ -552,7 +562,7 @@ def _build_figure(
                 "color": "#6A6A6A",
                 "shrinkA": 0,
                 "shrinkB": 0,
-                "mutation_scale": 18,
+                "mutation_scale": 16,
             },
             annotation_clip=False,
         )
@@ -640,9 +650,9 @@ def _build_figure(
     ax.set_yticks(y3)
     ax.set_yticklabels(order)
     ax.invert_yaxis()
-    ax.set_xlabel("Standardized beta")
-    ax.set_title("C. Predictor importance in full models", loc="left", pad=6)
-    ax.grid(axis="x", color="#E8E8E8", linewidth=0.8)
+    ax.set_xlabel(r"Standardized $\beta$")
+    ax.set_title("D. Predictor importance in full models", loc="left", pad=6)
+    ax.grid(axis="x", color="#C8C8C8", linewidth=0.7)
     ax.grid(axis="y", visible=False)
 
     ax.legend(
@@ -662,7 +672,7 @@ def _build_figure(
                 marker="o",
                 linestyle="",
                 color="#111111",
-                label="Mean beta (95% CI)",
+                label=r"Mean $\beta$ (95% CI)",
                 markersize=6,
             ),
             mpl.lines.Line2D(
@@ -677,8 +687,8 @@ def _build_figure(
                 markersize=6,
             ),
         ],
-        loc="lower center",
-        bbox_to_anchor=(0.5, 0.005),
+        loc="center left",
+        bbox_to_anchor=(0.66, 0.48),
         ncol=1,
         frameon=False,
         borderaxespad=0.4,

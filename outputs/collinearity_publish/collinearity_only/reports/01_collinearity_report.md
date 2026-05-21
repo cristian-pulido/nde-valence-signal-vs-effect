@@ -2,6 +2,8 @@
 
 This report embeds the VIF and Spearman diagnostics for each requested specification.
 
+Primary publication specification is `v2_dx_prior_only`; `v1_dx_joint` and `v3_dx_specify_only` are retained as structural/sensitivity diagnostics.
+
 
 ## v1_dx_joint — dx_prior_NDE + dx_prior_NDE_specify
 

@@ -10,25 +10,17 @@ from nde_analysis.preprocess.transform import (
 def test_preprocess_creates_core_fields():
     df = pd.read_csv("../../DATA/data_for_model.csv")
     required = {
-        "ADHD_SCALE",
-        "age",
-        "ERQ_01",
-        "ERQ_02",
-        "ERQ_03",
-        "ERQ_04",
-        "ERQ_05",
-        "ERQ_06",
-        "ERQ_07",
-        "ERQ_08",
-        "ERQ_09",
-        "ERQ_10",
+        "age_first_NDE",
+        "dx_prior_NDE",
+        "death_context_nature",
     }
     if not required.issubset(df.columns):
-        pytest.skip("Dataset does not contain full valence/post-effects input columns")
+        pytest.skip("Dataset does not contain full final-spec input columns")
     out = preprocess_data(df)
     assert "valence_binary" in out.analysis_df.columns
-    assert "ERQ_reappraisal" in out.analysis_df.columns
-    assert "ERQ_suppression" in out.analysis_df.columns
+    assert "dx_prior_NDE_Yes" in out.analysis_df.columns
+    assert "age_first_NDE" in out.analysis_df.columns
+    assert any(c.startswith("death_context_nature_") for c in out.analysis_df.columns)
     assert len(out.lci_score_cols) > 0
 
 

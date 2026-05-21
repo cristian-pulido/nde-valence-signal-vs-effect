@@ -12,7 +12,7 @@ if str(SRC) not in sys.path:
 from nde_analysis.analysis.bayesian_reporting import run_bayesian_reporting
 from nde_analysis.config import AppConfig, load_config
 from nde_analysis.io import ensure_directories, load_csv
-from nde_analysis.preprocess.transform import PreprocessedData, preprocess_data
+from nde_analysis.preprocess.transform import preprocess_data
 
 
 def _parse_args() -> argparse.Namespace:
@@ -38,22 +38,6 @@ def _prepare_config(args: argparse.Namespace) -> AppConfig:
     )
 
 
-def _fixed_complete_case(prep: PreprocessedData) -> PreprocessedData:
-    analysis_complete = prep.analysis_df.notna().all(axis=1)
-    lci_complete = (
-        prep.lci_df[["valence_binary", *prep.lci_score_cols]].notna().all(axis=1)
-    )
-    mask = analysis_complete & lci_complete
-
-    return PreprocessedData(
-        raw_df=prep.raw_df.loc[mask].copy(),
-        analysis_df=prep.analysis_df.loc[mask].copy(),
-        analysis_pretransform_df=prep.analysis_pretransform_df.loc[mask].copy(),
-        lci_df=prep.lci_df.loc[mask].copy(),
-        lci_score_cols=prep.lci_score_cols,
-    )
-
-
 def main() -> None:
     args = _parse_args()
     cfg = _prepare_config(args)
@@ -62,15 +46,11 @@ def main() -> None:
     prep = preprocess_data(
         raw, lci_min_valid_fraction=cfg.analysis.lci_min_valid_fraction
     )
-    prep_fixed = _fixed_complete_case(prep)
-
-    variable_root = cfg.output_dir / "variable_n"
-    fixed_root = cfg.output_dir / "fixed_n_complete_case"
+    variable_root = cfg.output_dir / "main"
 
     ensure_directories(
         variable_root, variable_root / "tables", variable_root / "reports"
     )
-    ensure_directories(fixed_root, fixed_root / "tables", fixed_root / "reports")
 
     out_variable = run_bayesian_reporting(
         prep,
@@ -79,22 +59,11 @@ def main() -> None:
         seed=args.seed,
         n_iter=args.n_iter,
         burn=args.burn,
-        variant_desc="Variable-N (available-case per outcome)",
-    )
-    out_fixed = run_bayesian_reporting(
-        prep_fixed,
-        tables_dir=fixed_root / "tables",
-        reports_dir=fixed_root / "reports",
-        seed=args.seed,
-        n_iter=args.n_iter,
-        burn=args.burn,
-        variant_desc="Fixed-N complete-case (rows with missing values removed upfront)",
+        variant_desc="Main analysis",
     )
 
     print(f"Saved: {out_variable['table']}")
     print(f"Saved: {out_variable['report']}")
-    print(f"Saved: {out_fixed['table']}")
-    print(f"Saved: {out_fixed['report']}")
 
 
 if __name__ == "__main__":
