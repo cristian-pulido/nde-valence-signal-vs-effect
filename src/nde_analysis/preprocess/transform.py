@@ -8,10 +8,6 @@ import pandas as pd
 from nde_analysis.preprocess.mappings import (
     CORE_MODEL_COLS,
     EDUCATION_MAP,
-    ERQ_COLS,
-    ERQ_LIKERT_MAP,
-    ERQ_REAPPRAISAL_ITEMS,
-    ERQ_SUPPRESSION_ITEMS,
     LCI_MAP,
     LCI_SECTIONS,
     VALENCE_MAP,
@@ -90,46 +86,44 @@ def preprocess_data(
         data = data.loc[~data["TO_DROP"].fillna(False)].copy()
 
     lci_cols = sorted({c for cols in LCI_SECTIONS.values() for c in cols})
-    needed = CORE_MODEL_COLS + ERQ_COLS + lci_cols
+    needed = CORE_MODEL_COLS + lci_cols
     require_columns(data, needed, context="preprocess")
 
     # Keep valid valence classes and derive binary target.
     data = data[data["valence"].isin(["Positive", "Mixed", "Negative"])].copy()
     data["valence_binary"] = data["valence"].map(VALENCE_MAP)
 
-    # ERQ mapping and scores.
-    data[ERQ_COLS] = data[ERQ_COLS].replace("Missing", np.nan)
-    for col in ERQ_COLS:
-        data[col] = pd.to_numeric(
-            data[col].apply(lambda v: ERQ_LIKERT_MAP.get(v, v)), errors="coerce"
-        )
-
-    data["ERQ_reappraisal"] = data[ERQ_REAPPRAISAL_ITEMS].mean(axis=1)
-    data["ERQ_suppression"] = data[ERQ_SUPPRESSION_ITEMS].mean(axis=1)
-
     # Demographic encoding.
     data["education_ord"] = data["education"].map(EDUCATION_MAP)
     data["sex_Male"] = (data["sex"].astype(str).str.lower() == "male").astype(int)
+    data["dx_prior_NDE_Yes"] = (
+        data["dx_prior_NDE"].astype(str).str.lower() == "yes"
+    ).astype(int)
+    death_ctx = pd.get_dummies(
+        data["death_context_nature"],
+        prefix="death_context_nature",
+        drop_first=True,
+        dtype=float,
+    )
+    data = pd.concat([data, death_ctx], axis=1)
+    death_context_cols = sorted(
+        c for c in data.columns if c.startswith("death_context_nature_")
+    )
 
     analysis_cols = [
         "valence",
         "valence_binary",
-        "age",
+        "age_first_NDE",
         "sex_Male",
         "education_ord",
         "CTQ_IM_SCORE",
-        "ADHD_SCALE",
-        "ERQ_reappraisal",
-        "ERQ_suppression",
+        "dx_prior_NDE_Yes",
         "greyson_total_no_affective",
-    ]
+    ] + death_context_cols
 
     # Numeric normalization for valence models.
     to_standardize = [
-        "age",
-        "ADHD_SCALE",
-        "ERQ_reappraisal",
-        "ERQ_suppression",
+        "age_first_NDE",
         "greyson_total_no_affective",
         "CTQ_PA_SCORE",
         "CTQ_SA_SCORE",
@@ -137,13 +131,15 @@ def preprocess_data(
         "CTQ_PN_SCORE",
     ]
     for col in to_standardize:
-        data[col] = pd.to_numeric(data[col], errors="coerce")
+        if col in data.columns:
+            data[col] = pd.to_numeric(data[col], errors="coerce")
 
     # Snapshot before z-score transformation for descriptive reporting.
     analysis_pretransform_df = data[analysis_cols].copy()
 
     for col in to_standardize:
-        data[col] = _zscore(data[col])
+        if col in data.columns:
+            data[col] = _zscore(data[col])
 
     # LCI mapping and section scores.
     lci_df = data[["valence_binary"] + lci_cols].copy()

@@ -23,14 +23,15 @@ def build_covariate_diagnostics(
     analysis_pretransform_df: pd.DataFrame | None = None,
     complete_case: bool = False,
 ) -> CovariateDiagnostics:
+    death_context_vars = sorted(
+        c for c in analysis_df.columns if c.startswith("death_context_nature_")
+    )
     overlap_vars = [
-        "age",
+        "age_first_NDE",
         "CTQ_IM_SCORE",
-        "ADHD_SCALE",
-        "ERQ_reappraisal",
-        "ERQ_suppression",
         "education_ord",
-    ]
+        "dx_prior_NDE_Yes",
+    ] + death_context_vars
 
     df_overlap = analysis_df[["valence_binary", "sex_Male"] + overlap_vars].copy()
     if complete_case:

@@ -32,27 +32,34 @@ def _fit_logit(df: pd.DataFrame, outcome: str, predictors: list[str]):
 
 
 def run_valence_models(analysis_df: pd.DataFrame) -> ValenceModelResults:
-    model1_vars = ["age", "education_ord", "sex_Male"]
+    death_context_vars = sorted(
+        c for c in analysis_df.columns if c.startswith("death_context_nature_")
+    )
+
+    model1_vars = ["age_first_NDE", "education_ord", "sex_Male"]
     model2_vars = model1_vars + [
         "CTQ_IM_SCORE",
-        "ADHD_SCALE",
-        "ERQ_reappraisal",
-        "ERQ_suppression",
-    ]
+        "dx_prior_NDE_Yes",
+    ] + death_context_vars
     model3_vars = model2_vars + ["greyson_total_no_affective"]
+
+    model1_vars = [c for c in model1_vars if c in analysis_df.columns]
+    model2_vars = [c for c in model2_vars if c in analysis_df.columns]
+    model3_vars = [c for c in model3_vars if c in analysis_df.columns]
 
     m1, d1 = _fit_logit(analysis_df, "valence_binary", model1_vars)
     m2, d2 = _fit_logit(analysis_df, "valence_binary", model2_vars)
     m3, d3 = _fit_logit(analysis_df, "valence_binary", model3_vars)
 
     label_map = {
-        "age": "Age",
+        "age_first_NDE": "Age at first NDE",
         "education_ord": "Education",
         "sex_Male": "Sex (Male vs non-male)",
         "CTQ_IM_SCORE": "CTQ Emotional Abuse",
-        "ADHD_SCALE": "ADHD",
-        "ERQ_reappraisal": "ERQ Reappraisal",
-        "ERQ_suppression": "ERQ Suppression",
+        "dx_prior_NDE_Yes": "Prior diagnosis (Yes)",
+        "death_context_nature_no_death_context": "Death context: no death context",
+        "death_context_nature_objective_medical_context": "Death context: objective medical",
+        "death_context_nature_subjective_threat_only": "Death context: subjective threat only",
         "greyson_total_no_affective": "Greyson (non-affective)",
     }
 

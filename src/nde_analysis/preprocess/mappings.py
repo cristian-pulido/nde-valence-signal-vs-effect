@@ -18,6 +18,7 @@ ERQ_LIKERT_MAP = {
 }
 
 EDUCATION_MAP = {
+    "Other": 0,
     "No formal education": 0,
     "Primary education": 1,
     "Secondary education": 2,
@@ -112,9 +113,10 @@ CORE_MODEL_COLS = [
     "CTQ_SA_SCORE",
     "CTQ_EN_SCORE",
     "CTQ_PN_SCORE",
-    "ADHD_SCALE",
     "greyson_total_no_affective",
-    "age",
+    "age_first_NDE",
     "sex",
     "education",
+    "dx_prior_NDE",
+    "death_context_nature",
 ]

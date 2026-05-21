@@ -38,7 +38,7 @@ from nde_analysis.plotting.valence_plots import (
     plot_predicted_probabilities,
     plot_roc,
 )
-from nde_analysis.preprocess.transform import PreprocessedData, preprocess_data
+from nde_analysis.preprocess.transform import preprocess_data
 from nde_analysis.preprocess.transform import preprocess_collinearity_data
 from nde_analysis.reporting.render import render_report
 from nde_analysis.utils.logging import setup_logging
@@ -276,20 +276,22 @@ def run_valence_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         100 * binary_valence_dist["n"] / binary_valence_dist["n"].sum()
     )
 
+    death_context_cols = sorted(
+        c for c in prep.raw_df.columns if c.startswith("death_context_nature_")
+    )
+
     vif_predictors = [
         "CTQ_PA_SCORE",
         "CTQ_SA_SCORE",
         "CTQ_EN_SCORE",
         "CTQ_PN_SCORE",
-        "ADHD_SCALE",
-        "ERQ_reappraisal",
-        "ERQ_suppression",
         "greyson_total_no_affective",
-        "age",
+        "age_first_NDE",
         "education_ord",
         "sex_Male",
+        "dx_prior_NDE_Yes",
         "valence_binary",
-    ]
+    ] + death_context_cols
     vif_table = compute_vif_table(prep.raw_df, vif_predictors)
     corr_df = (
         prep.raw_df[vif_predictors]
@@ -326,7 +328,7 @@ def run_valence_pipeline(cfg: AppConfig, prep) -> dict[str, Path]:
         results.table_m1, "Model 1: Demographics", fig_m1, cfg.plot.dpi
     )
     plot_odds_ratio_forest(
-        results.table_m2, "Model 2: + Psychological", fig_m2, cfg.plot.dpi
+        results.table_m2, "Model 2: + Context and Clinical History", fig_m2, cfg.plot.dpi
     )
     plot_odds_ratio_forest(
         results.table_m3, "Model 3: + Experiential", fig_m3, cfg.plot.dpi
@@ -413,13 +415,11 @@ def run_post_effects_pipeline(
         complete_case=covariate_complete_case,
     )
     overlap_vars = [
-        "age",
+        "age_first_NDE",
         "CTQ_IM_SCORE",
-        "ADHD_SCALE",
-        "ERQ_reappraisal",
-        "ERQ_suppression",
         "education_ord",
-    ]
+        "dx_prior_NDE_Yes",
+    ] + sorted(c for c in prep.analysis_df.columns if c.startswith("death_context_nature_"))
     plot_covariate_kde_grid(
         cov_diag.overlap_df, overlap_vars, fig_cov_kde, cfg.plot.dpi
     )
@@ -444,15 +444,15 @@ def run_post_effects_pipeline(
 
     # Adjusted models (full vs covariates-only)
     cov_cont = [
-        "age",
+        "age_first_NDE",
         "CTQ_IM_SCORE",
-        "ADHD_SCALE",
-        "ERQ_reappraisal",
-        "ERQ_suppression",
         "education_ord",
         "greyson_total_no_affective",
+        "dx_prior_NDE_Yes",
     ]
-    cov_cat = ["sex_Male"]
+    cov_cat = [
+        "sex_Male",
+    ] + sorted(c for c in prep.analysis_df.columns if c.startswith("death_context_nature_"))
 
     lci_model_df = pd.concat(
         [prep.analysis_df, prep.lci_df[prep.lci_score_cols]], axis=1
@@ -630,8 +630,8 @@ def run_post_effects_pipeline(
     if covariate_complete_case:
         analysis_sample_desc = (
             "complete-case intersection across `valence_binary`, `sex_Male`, "
-            "`age`, `CTQ_IM_SCORE`, `ADHD_SCALE`, `ERQ_reappraisal`, "
-            "`ERQ_suppression`, and `education_ord`."
+            "`age_first_NDE`, `CTQ_IM_SCORE`, `education_ord`, `dx_prior_NDE_Yes`, "
+            "and death-context dummy covariates."
         )
     else:
         analysis_sample_desc = (
@@ -713,22 +713,6 @@ def _prepare_config(args: argparse.Namespace) -> AppConfig:
     if args.seed is not None:
         cfg.reproducibility.seed = args.seed
     return cfg
-
-
-def _fixed_complete_case(prep: PreprocessedData) -> PreprocessedData:
-    analysis_complete = prep.analysis_df.notna().all(axis=1)
-    lci_complete = (
-        prep.lci_df[["valence_binary", *prep.lci_score_cols]].notna().all(axis=1)
-    )
-    mask = analysis_complete & lci_complete
-
-    return PreprocessedData(
-        raw_df=prep.raw_df.loc[mask].copy(),
-        analysis_df=prep.analysis_df.loc[mask].copy(),
-        analysis_pretransform_df=prep.analysis_pretransform_df.loc[mask].copy(),
-        lci_df=prep.lci_df.loc[mask].copy(),
-        lci_score_cols=prep.lci_score_cols,
-    )
 
 
 def _variant_config(base_cfg: AppConfig, variant: str) -> AppConfig:
@@ -842,27 +826,15 @@ def main() -> None:
         raw, lci_min_valid_fraction=cfg.analysis.lci_min_valid_fraction
     )
 
-    variable_cfg = _variant_config(cfg, "variable_n")
-    fixed_cfg = _variant_config(cfg, "fixed_n_complete_case")
-    fixed_prep = _fixed_complete_case(prep)
-
-    variable_reports, _ = _run_variant(
-        variable_cfg,
+    main_cfg = _variant_config(cfg, "main")
+    reports, _ = _run_variant(
+        main_cfg,
         prep,
         command=args.command,
-        variant_desc="Variable-N (available-case per outcome)",
+        variant_desc="Main analysis",
         covariate_complete_case=False,
     )
-    fixed_reports, _ = _run_variant(
-        fixed_cfg,
-        fixed_prep,
-        command=args.command,
-        variant_desc="Fixed-N complete-case (rows with missing values removed upfront)",
-        covariate_complete_case=True,
-    )
-
-    LOGGER.info("Run complete. Variable summary: %s", variable_reports[0])
-    LOGGER.info("Run complete. Fixed summary: %s", fixed_reports[0])
+    LOGGER.info("Run complete. Summary: %s", reports[0])
 
 
 if __name__ == "__main__":
