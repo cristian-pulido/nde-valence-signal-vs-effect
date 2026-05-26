@@ -53,11 +53,11 @@ PREDICTOR_SPECS: list[PredictorSpec] = [
     PredictorSpec("dx_prior_NDE_Yes", "Prior diagnosis"),
     PredictorSpec(
         "death_context_nature_objective_medical_context",
-        "Context: objective medical",
+        "Context:\nobjective medical",
     ),
     PredictorSpec(
         "death_context_nature_subjective_threat_only",
-        "Context: subjective threat",
+        "Context:\nsubjective threat",
     ),
     PredictorSpec("greyson_total_no_affective", "Greyson\nnon-affective"),
 ]
@@ -82,6 +82,30 @@ def _load_required_table(path: Path) -> pd.DataFrame:
     if not path.exists():
         raise FileNotFoundError(f"Required table not found: {path}")
     return pd.read_csv(path)
+
+
+def _resolve_required_table_path(cfg, filename: str) -> Path:
+    candidates = [
+        cfg.tables_dir / filename,
+        cfg.output_dir / "main" / "tables" / filename,
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    tried = "\n- ".join(str(p) for p in candidates)
+    raise FileNotFoundError(
+        f"Required table not found: {filename}. Tried:\n- {tried}"
+    )
+
+
+def _resolve_figures_dir(cfg, table_path: Path) -> Path:
+    if table_path.parent.name == "tables":
+        alt = table_path.parent.parent / "figures"
+        if alt.parent.exists() and "main" in alt.parts:
+            return alt
+    if cfg.figures_dir.exists() or cfg.figures_dir.parent.exists():
+        return cfg.figures_dir
+    return cfg.figures_dir
 
 
 def _mean_ci(
@@ -330,7 +354,7 @@ def _build_figure(
 ) -> plt.Figure:
     _apply_publication_style()
 
-    valence_colors = {"Positive": "#3B82C4", "Non-positive": "#E07A33"}
+    valence_colors = {"Positive": "#5A8F78", "Non-positive": "#8E3B46"}
 
     fig, axes = plt.subplots(
         1,
@@ -421,8 +445,10 @@ def _build_figure(
     ax.set_yticks(y)
     ax.set_yticklabels(panel_a_df["display_name"])
     ax.invert_yaxis()
-    ax.set_xlabel("Mean change (0 = no change)")
-    ax.set_title("B. Mean change by valence", loc="left", pad=6)
+    ax.set_xlabel("Mean change (0 = no change)", fontsize=15)
+    ax.set_title("B. Mean change by valence", loc="left", pad=6, fontweight="bold")
+    ax.tick_params(axis="x", labelsize=12)
+    ax.tick_params(axis="y", labelsize=13)
     ax.grid(axis="x", color="#C8C8C8", linewidth=0.7)
     ax.grid(axis="y", visible=False)
 
@@ -469,8 +495,8 @@ def _build_figure(
 
     ax = axes[1]
     y2 = np.arange(len(panel_b_df))
-    base_color = "#9BC7B1"
-    delta_color = "#1F9A72"
+    base_color = "#D1D1D1"
+    delta_color = "#5A8F78"
     ax.barh(
         y2,
         panel_b_df["r2_cov_only"],
@@ -494,8 +520,15 @@ def _build_figure(
     ax.set_yticklabels([])
     ax.tick_params(axis="y", length=0)
     ax.invert_yaxis()
-    ax.set_xlabel(r"Total $R^2$ (base + increment)")
-    ax.set_title(r"C. Base $R^2$ and $\Delta R^2$ from valence", loc="left", pad=6)
+    ax.set_xlabel(r"Total $R^2$ (base + increment)", fontsize=15)
+    ax.set_title(
+        r"C. Base $R^2$ and $\Delta R^2$ from valence",
+        loc="left",
+        pad=6,
+        fontweight="bold",
+    )
+    ax.tick_params(axis="x", labelsize=12)
+    ax.tick_params(axis="y", labelsize=13)
     ax.grid(axis="x", color="#C8C8C8", linewidth=0.7)
     ax.grid(axis="y", visible=False)
     max_r2 = float(panel_b_df["r2_full"].max())
@@ -600,6 +633,7 @@ def _build_figure(
         is_valence = row["predictor"] == "valence_binary"
         marker = "D" if is_valence else "o"
         face = "white" if is_valence else "#222222"
+        edge = "#8E3B46" if is_valence else "#111111"
 
         if np.isfinite(row["mean_beta_std_ci_low"]) and np.isfinite(
             row["mean_beta_std_ci_high"]
@@ -615,10 +649,10 @@ def _build_figure(
                 y_base,
                 xerr=err,
                 fmt=marker,
-                color="#111111",
+                color=edge,
                 ecolor="#111111",
                 markerfacecolor=face,
-                markeredgecolor="#111111",
+                markeredgecolor=edge,
                 markeredgewidth=1.0,
                 capsize=3.0,
                 lw=1.2,
@@ -632,7 +666,7 @@ def _build_figure(
                 marker=marker,
                 s=56,
                 facecolors=face,
-                edgecolors="#111111",
+                edgecolors=edge,
                 linewidths=1.0,
                 zorder=4,
             )
@@ -650,8 +684,12 @@ def _build_figure(
     ax.set_yticks(y3)
     ax.set_yticklabels(order)
     ax.invert_yaxis()
-    ax.set_xlabel(r"Standardized $\beta$")
-    ax.set_title("D. Predictor importance in full models", loc="left", pad=6)
+    ax.set_xlabel(r"Standardized $\beta$", fontsize=15)
+    ax.set_title(
+        "D. Predictor importance in full models", loc="left", pad=6, fontweight="bold"
+    )
+    ax.tick_params(axis="x", labelsize=12)
+    ax.tick_params(axis="y", labelsize=13)
     ax.grid(axis="x", color="#C8C8C8", linewidth=0.7)
     ax.grid(axis="y", visible=False)
 
@@ -681,11 +719,11 @@ def _build_figure(
                 marker="D",
                 linestyle="",
                 markerfacecolor="white",
-                markeredgecolor="#111111",
-                color="#111111",
-                label="Valence",
-                markersize=6,
-            ),
+                 markeredgecolor="#8E3B46",
+                 color="#8E3B46",
+                 label="Valence",
+                 markersize=6,
+             ),
         ],
         loc="center left",
         bbox_to_anchor=(0.66, 0.48),
@@ -727,8 +765,10 @@ def main() -> None:
         reports_dir_override=args.reports_dir,
     )
 
-    lci_by_valence_path = cfg.tables_dir / "lci_by_valence.csv"
-    lci_delta_path = cfg.tables_dir / "lci_full_vs_covariates_comparison.csv"
+    lci_by_valence_path = _resolve_required_table_path(cfg, "lci_by_valence.csv")
+    lci_delta_path = _resolve_required_table_path(
+        cfg, "lci_full_vs_covariates_comparison.csv"
+    )
 
     lci_by_valence = _load_required_table(lci_by_valence_path)
 
@@ -743,9 +783,10 @@ def main() -> None:
 
     fig = _build_figure(panel_a_df, panel_b_df, panel_c_coef_df, panel_c_summary_df)
 
-    cfg.figures_dir.mkdir(parents=True, exist_ok=True)
-    out_png = cfg.figures_dir / "main_shortpaper_figure.png"
-    out_pdf = cfg.figures_dir / "main_shortpaper_figure.pdf"
+    figures_dir = _resolve_figures_dir(cfg, lci_by_valence_path)
+    figures_dir.mkdir(parents=True, exist_ok=True)
+    out_png = figures_dir / "main_shortpaper_figure.png"
+    out_pdf = figures_dir / "main_shortpaper_figure.pdf"
 
     fig.savefig(out_png, dpi=450, bbox_inches="tight")
     fig.savefig(out_pdf, bbox_inches="tight")
