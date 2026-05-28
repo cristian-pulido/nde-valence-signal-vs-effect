@@ -6,7 +6,7 @@ import pandas as pd
 from scipy.stats import mannwhitneyu, wilcoxon
 
 from nde_analysis.analysis.multiple_testing import add_fdr_columns
-from nde_analysis.preprocess.mappings import LCI_SECTIONS
+from nde_analysis.preprocess.mappings import LCI_SECTIONS, normalize_display_label
 
 
 @dataclass
@@ -27,7 +27,7 @@ def run_lci_analyses(lci_df: pd.DataFrame, lci_score_cols: list[str]) -> LCIResu
             _, p = wilcoxon(series)
             global_rows.append(
                 {
-                    "category": col.replace("LCI_", ""),
+                    "category": normalize_display_label(col).replace("LCI_", ""),
                     "median": series.median(),
                     "mean": series.mean(),
                     "p_value": p,
@@ -41,7 +41,7 @@ def run_lci_analyses(lci_df: pd.DataFrame, lci_score_cols: list[str]) -> LCIResu
             _, p2 = mannwhitneyu(pos, non, alternative="two-sided")
             by_valence_rows.append(
                 {
-                    "category": col.replace("LCI_", ""),
+                    "category": normalize_display_label(col).replace("LCI_", ""),
                     "mean_positive": pos.mean(),
                     "mean_non_positive": non.mean(),
                     "median_positive": pos.median(),
@@ -54,7 +54,9 @@ def run_lci_analyses(lci_df: pd.DataFrame, lci_score_cols: list[str]) -> LCIResu
 
     missing = pd.DataFrame(
         {
-            "category": [c.replace("LCI_", "") for c in lci_score_cols],
+            "category": [
+                normalize_display_label(c).replace("LCI_", "") for c in lci_score_cols
+            ],
             "missing_fraction": [lci_df[c].isna().mean() for c in lci_score_cols],
         }
     ).sort_values("missing_fraction", ascending=False)
@@ -69,7 +71,9 @@ def run_lci_analyses(lci_df: pd.DataFrame, lci_score_cols: list[str]) -> LCIResu
         .dropna()
         .copy()
     )
-    long_df["category"] = long_df["category"].str.replace("LCI_", "", regex=False)
+    long_df["category"] = (
+        long_df["category"].map(normalize_display_label).str.replace("LCI_", "", regex=False)
+    )
     long_df["valence"] = long_df["valence_binary"].map(
         {1: "Positive", 0: "Non-positive"}
     )

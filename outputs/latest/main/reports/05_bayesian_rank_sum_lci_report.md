@@ -23,7 +23,7 @@ Do post-NDE outcomes differ between Positive and Non-positive NDE groups, or is 
    Appreciation of Life          90              32 3.275 moderate evidence for H0
      Concern for Others          90              32 0.949             inconclusive
                   Death          90              32 4.429 moderate evidence for H0
-  Material Achievements          90              32 0.031   strong evidence for H1
+    Worldly Achievement          90              32 0.031   strong evidence for H1
         Meaning/Purpose          90              32 3.267 moderate evidence for H0
                   Other          90              32 1.793             inconclusive
             Religiosity          90              32 3.122 moderate evidence for H0
