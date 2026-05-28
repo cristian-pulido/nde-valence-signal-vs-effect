@@ -4,7 +4,7 @@
 
 ```
                 outcome   N  valence_beta  valence_ci_low  valence_ci_high  valence_p  valence_p_fdr valence_fdr_reject  R2_full  R2_cov_only  delta_R2  delta_AIC  delta_BIC valence_adds_signal
-  Material Achievements 122        -0.169          -0.405            0.068      0.161          0.806                 No    0.193        0.178     0.014     -0.148      2.656                  No
+    Worldly Achievement 122        -0.169          -0.405            0.068      0.161          0.806                 No    0.193        0.178     0.014     -0.148      2.656                  No
      Concern for Others 122         0.194          -0.048            0.436      0.115          0.806                 No    0.250        0.233     0.017     -0.716      2.088                  No
    Appreciation of Life 122         0.127          -0.152            0.406      0.369          0.849                 No    0.246        0.240     0.005      1.116      3.920                  No
         Meaning/Purpose 122         0.112          -0.161            0.385      0.418          0.849                 No    0.269        0.265     0.004      1.283      4.087                  No

@@ -40,6 +40,7 @@ from nde_analysis.plotting.valence_plots import (
 )
 from nde_analysis.preprocess.transform import preprocess_data
 from nde_analysis.preprocess.transform import preprocess_collinearity_data
+from nde_analysis.preprocess.mappings import normalize_display_label
 from nde_analysis.reporting.render import render_report
 from nde_analysis.utils.logging import setup_logging
 
@@ -467,7 +468,10 @@ def run_post_effects_pipeline(
     lci_comp = compare_full_vs_covariates(
         model_df=lci_model_df,
         outcomes=prep.lci_score_cols,
-        outcome_labels={c: c.replace("LCI_", "") for c in prep.lci_score_cols},
+        outcome_labels={
+            c: normalize_display_label(c).replace("LCI_", "")
+            for c in prep.lci_score_cols
+        },
         continuous_covariates=cov_cont,
         categorical_covariates=cov_cat,
         min_n=cfg.analysis.min_n_models,

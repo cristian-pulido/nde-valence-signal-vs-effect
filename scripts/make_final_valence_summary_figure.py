@@ -41,7 +41,7 @@ OUTCOME_SPECS: list[OutcomeSpec] = [
     ),
     OutcomeSpec("Death", "Death", "LCI_Death"),
     OutcomeSpec("Religiosity", "Religiosity", "LCI_Religiosity"),
-    OutcomeSpec("Material Achievements", "Material", "LCI_Material Achievements"),
+    OutcomeSpec("Worldly Achievement", "Worldly Achievement", "LCI_Material Achievements"),
 ]
 
 PREDICTOR_SPECS: list[PredictorSpec] = [

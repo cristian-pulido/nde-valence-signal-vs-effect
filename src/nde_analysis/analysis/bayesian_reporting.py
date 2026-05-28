@@ -6,6 +6,7 @@ import pandas as pd
 
 from nde_analysis.analysis.bayesian_rank_sum import run_bayesian_rank_sum
 from nde_analysis.io import write_table
+from nde_analysis.preprocess.mappings import normalize_display_label
 
 
 def _table_text(df: pd.DataFrame, digits: int = 3) -> str:
@@ -66,8 +67,8 @@ def _load_frequentist_summary(tables_dir: Path) -> str:
 
 def _display_variable_name(v: str) -> str:
     if v.startswith("LCI_"):
-        return v.replace("LCI_", "")
-    return v
+        return normalize_display_label(v).replace("LCI_", "")
+    return normalize_display_label(v)
 
 
 def _build_report_text(
@@ -165,7 +166,9 @@ def run_bayesian_reporting(
     )
 
     table_path = tables_dir / "bayesian_rank_sum_lci.csv"
-    write_table(results, table_path)
+    results_display = results.copy()
+    results_display["variable"] = results_display["variable"].map(_display_variable_name)
+    write_table(results_display, table_path)
 
     frequentist_note = _load_frequentist_summary(tables_dir)
     report_path = reports_dir / "05_bayesian_rank_sum_lci_report.md"

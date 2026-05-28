@@ -28,6 +28,20 @@ EDUCATION_MAP = {
 
 VALENCE_MAP = {"Positive": 1, "Mixed": 0, "Negative": 0}
 
+DISPLAY_LABEL_MAP = {
+    "Material Achievements": "Worldly Achievement",
+    "Material Priorities": "Worldly Achievement",
+    "Material": "Worldly Achievement",
+}
+
+
+def normalize_display_label(label: str) -> str:
+    if label.startswith("LCI_"):
+        base = label.replace("LCI_", "", 1)
+        normalized = DISPLAY_LABEL_MAP.get(base, base)
+        return f"LCI_{normalized}"
+    return DISPLAY_LABEL_MAP.get(label, label)
+
 LCI_MAP = {
     "Strongly diminished": -2,
     "Decreased": -1,
