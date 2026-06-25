@@ -419,6 +419,7 @@ def run_post_effects_pipeline(
         "age_first_NDE",
         "CTQ_IM_SCORE",
         "education_ord",
+        "greyson_total_no_affective",
         "dx_prior_NDE_Yes",
     ] + sorted(c for c in prep.analysis_df.columns if c.startswith("death_context_nature_"))
     plot_covariate_kde_grid(
@@ -634,7 +635,7 @@ def run_post_effects_pipeline(
     if covariate_complete_case:
         analysis_sample_desc = (
             "complete-case intersection across `valence_binary`, `sex_Male`, "
-            "`age_first_NDE`, `CTQ_IM_SCORE`, `education_ord`, `dx_prior_NDE_Yes`, "
+            "`age_first_NDE`, `CTQ_IM_SCORE`, `education_ord`, `greyson_total_no_affective`, `dx_prior_NDE_Yes`, "
             "and death-context dummy covariates."
         )
     else:

@@ -30,6 +30,7 @@ def build_covariate_diagnostics(
         "age_first_NDE",
         "CTQ_IM_SCORE",
         "education_ord",
+        "greyson_total_no_affective",
         "dx_prior_NDE_Yes",
     ] + death_context_vars
 
