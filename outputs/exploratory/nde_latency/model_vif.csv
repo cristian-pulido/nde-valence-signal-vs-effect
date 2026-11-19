@@ -1,0 +1,291 @@
+outcome,model,term,vif
+Appreciation of Life,M0,valence_binary,1.1244485815915617
+Appreciation of Life,M0,age_first_NDE_c,1.0533520226152138
+Appreciation of Life,M0,CTQ_IM_SCORE_c,1.094467614269017
+Appreciation of Life,M0,education_ord_c,1.0872716510806502
+Appreciation of Life,M0,greyson_total_no_affective_c,1.1230113752011588
+Appreciation of Life,M0,dx_prior_NDE_Yes_c,1.1207860091259243
+Appreciation of Life,M0,sex_Male,1.0677230921650112
+Appreciation of Life,M0,death_context_nature_objective_medical_context,1.3374015987241927
+Appreciation of Life,M0,death_context_nature_subjective_threat_only,1.3379960176707246
+Appreciation of Life,M1,valence_binary,1.1308283632183367
+Appreciation of Life,M1,age_first_NDE_c,2.014560410430729
+Appreciation of Life,M1,CTQ_IM_SCORE_c,1.0980519598895346
+Appreciation of Life,M1,education_ord_c,1.0914842819813089
+Appreciation of Life,M1,greyson_total_no_affective_c,1.1284819881755295
+Appreciation of Life,M1,dx_prior_NDE_Yes_c,1.1212022107607342
+Appreciation of Life,M1,sex_Male,1.0769491733467382
+Appreciation of Life,M1,death_context_nature_objective_medical_context,1.3390223745768475
+Appreciation of Life,M1,death_context_nature_subjective_threat_only,1.3413004806721671
+Appreciation of Life,M1,latency_first_NDE_proxy_c,2.0109256445713655
+Appreciation of Life,M2,valence_binary,1.1308283632183367
+Appreciation of Life,M2,CTQ_IM_SCORE_c,1.0980519598895344
+Appreciation of Life,M2,education_ord_c,1.0914842819813084
+Appreciation of Life,M2,greyson_total_no_affective_c,1.1284819881755295
+Appreciation of Life,M2,dx_prior_NDE_Yes_c,1.1212022107607345
+Appreciation of Life,M2,sex_Male,1.0769491733467382
+Appreciation of Life,M2,death_context_nature_objective_medical_context,1.3390223745768475
+Appreciation of Life,M2,death_context_nature_subjective_threat_only,1.3413004806721667
+Appreciation of Life,M2,latency_first_NDE_proxy_c,1.2457361220847194
+Appreciation of Life,M2,age_at_survey_c,1.2153428687686776
+Self-Acceptance,M0,valence_binary,1.1244485815915617
+Self-Acceptance,M0,age_first_NDE_c,1.0533520226152138
+Self-Acceptance,M0,CTQ_IM_SCORE_c,1.094467614269017
+Self-Acceptance,M0,education_ord_c,1.0872716510806502
+Self-Acceptance,M0,greyson_total_no_affective_c,1.1230113752011588
+Self-Acceptance,M0,dx_prior_NDE_Yes_c,1.1207860091259243
+Self-Acceptance,M0,sex_Male,1.0677230921650112
+Self-Acceptance,M0,death_context_nature_objective_medical_context,1.3374015987241927
+Self-Acceptance,M0,death_context_nature_subjective_threat_only,1.3379960176707246
+Self-Acceptance,M1,valence_binary,1.1308283632183367
+Self-Acceptance,M1,age_first_NDE_c,2.014560410430729
+Self-Acceptance,M1,CTQ_IM_SCORE_c,1.0980519598895346
+Self-Acceptance,M1,education_ord_c,1.0914842819813089
+Self-Acceptance,M1,greyson_total_no_affective_c,1.1284819881755295
+Self-Acceptance,M1,dx_prior_NDE_Yes_c,1.1212022107607342
+Self-Acceptance,M1,sex_Male,1.0769491733467382
+Self-Acceptance,M1,death_context_nature_objective_medical_context,1.3390223745768475
+Self-Acceptance,M1,death_context_nature_subjective_threat_only,1.3413004806721671
+Self-Acceptance,M1,latency_first_NDE_proxy_c,2.0109256445713655
+Self-Acceptance,M2,valence_binary,1.1308283632183367
+Self-Acceptance,M2,CTQ_IM_SCORE_c,1.0980519598895344
+Self-Acceptance,M2,education_ord_c,1.0914842819813084
+Self-Acceptance,M2,greyson_total_no_affective_c,1.1284819881755295
+Self-Acceptance,M2,dx_prior_NDE_Yes_c,1.1212022107607345
+Self-Acceptance,M2,sex_Male,1.0769491733467382
+Self-Acceptance,M2,death_context_nature_objective_medical_context,1.3390223745768475
+Self-Acceptance,M2,death_context_nature_subjective_threat_only,1.3413004806721667
+Self-Acceptance,M2,latency_first_NDE_proxy_c,1.2457361220847194
+Self-Acceptance,M2,age_at_survey_c,1.2153428687686776
+Concern for Others,M0,valence_binary,1.1244485815915617
+Concern for Others,M0,age_first_NDE_c,1.0533520226152138
+Concern for Others,M0,CTQ_IM_SCORE_c,1.094467614269017
+Concern for Others,M0,education_ord_c,1.0872716510806502
+Concern for Others,M0,greyson_total_no_affective_c,1.1230113752011588
+Concern for Others,M0,dx_prior_NDE_Yes_c,1.1207860091259243
+Concern for Others,M0,sex_Male,1.0677230921650112
+Concern for Others,M0,death_context_nature_objective_medical_context,1.3374015987241927
+Concern for Others,M0,death_context_nature_subjective_threat_only,1.3379960176707246
+Concern for Others,M1,valence_binary,1.1308283632183367
+Concern for Others,M1,age_first_NDE_c,2.014560410430729
+Concern for Others,M1,CTQ_IM_SCORE_c,1.0980519598895346
+Concern for Others,M1,education_ord_c,1.0914842819813089
+Concern for Others,M1,greyson_total_no_affective_c,1.1284819881755295
+Concern for Others,M1,dx_prior_NDE_Yes_c,1.1212022107607342
+Concern for Others,M1,sex_Male,1.0769491733467382
+Concern for Others,M1,death_context_nature_objective_medical_context,1.3390223745768475
+Concern for Others,M1,death_context_nature_subjective_threat_only,1.3413004806721671
+Concern for Others,M1,latency_first_NDE_proxy_c,2.0109256445713655
+Concern for Others,M2,valence_binary,1.1308283632183367
+Concern for Others,M2,CTQ_IM_SCORE_c,1.0980519598895344
+Concern for Others,M2,education_ord_c,1.0914842819813084
+Concern for Others,M2,greyson_total_no_affective_c,1.1284819881755295
+Concern for Others,M2,dx_prior_NDE_Yes_c,1.1212022107607345
+Concern for Others,M2,sex_Male,1.0769491733467382
+Concern for Others,M2,death_context_nature_objective_medical_context,1.3390223745768475
+Concern for Others,M2,death_context_nature_subjective_threat_only,1.3413004806721667
+Concern for Others,M2,latency_first_NDE_proxy_c,1.2457361220847194
+Concern for Others,M2,age_at_survey_c,1.2153428687686776
+Worldly Achievement,M0,valence_binary,1.1244485815915617
+Worldly Achievement,M0,age_first_NDE_c,1.0533520226152138
+Worldly Achievement,M0,CTQ_IM_SCORE_c,1.094467614269017
+Worldly Achievement,M0,education_ord_c,1.0872716510806502
+Worldly Achievement,M0,greyson_total_no_affective_c,1.1230113752011588
+Worldly Achievement,M0,dx_prior_NDE_Yes_c,1.1207860091259243
+Worldly Achievement,M0,sex_Male,1.0677230921650112
+Worldly Achievement,M0,death_context_nature_objective_medical_context,1.3374015987241927
+Worldly Achievement,M0,death_context_nature_subjective_threat_only,1.3379960176707246
+Worldly Achievement,M1,valence_binary,1.1308283632183367
+Worldly Achievement,M1,age_first_NDE_c,2.014560410430729
+Worldly Achievement,M1,CTQ_IM_SCORE_c,1.0980519598895346
+Worldly Achievement,M1,education_ord_c,1.0914842819813089
+Worldly Achievement,M1,greyson_total_no_affective_c,1.1284819881755295
+Worldly Achievement,M1,dx_prior_NDE_Yes_c,1.1212022107607342
+Worldly Achievement,M1,sex_Male,1.0769491733467382
+Worldly Achievement,M1,death_context_nature_objective_medical_context,1.3390223745768475
+Worldly Achievement,M1,death_context_nature_subjective_threat_only,1.3413004806721671
+Worldly Achievement,M1,latency_first_NDE_proxy_c,2.0109256445713655
+Worldly Achievement,M2,valence_binary,1.1308283632183367
+Worldly Achievement,M2,CTQ_IM_SCORE_c,1.0980519598895344
+Worldly Achievement,M2,education_ord_c,1.0914842819813084
+Worldly Achievement,M2,greyson_total_no_affective_c,1.1284819881755295
+Worldly Achievement,M2,dx_prior_NDE_Yes_c,1.1212022107607345
+Worldly Achievement,M2,sex_Male,1.0769491733467382
+Worldly Achievement,M2,death_context_nature_objective_medical_context,1.3390223745768475
+Worldly Achievement,M2,death_context_nature_subjective_threat_only,1.3413004806721667
+Worldly Achievement,M2,latency_first_NDE_proxy_c,1.2457361220847194
+Worldly Achievement,M2,age_at_survey_c,1.2153428687686776
+Social/Planetary Values,M0,valence_binary,1.1244485815915617
+Social/Planetary Values,M0,age_first_NDE_c,1.0533520226152138
+Social/Planetary Values,M0,CTQ_IM_SCORE_c,1.094467614269017
+Social/Planetary Values,M0,education_ord_c,1.0872716510806502
+Social/Planetary Values,M0,greyson_total_no_affective_c,1.1230113752011588
+Social/Planetary Values,M0,dx_prior_NDE_Yes_c,1.1207860091259243
+Social/Planetary Values,M0,sex_Male,1.0677230921650112
+Social/Planetary Values,M0,death_context_nature_objective_medical_context,1.3374015987241927
+Social/Planetary Values,M0,death_context_nature_subjective_threat_only,1.3379960176707246
+Social/Planetary Values,M1,valence_binary,1.1308283632183367
+Social/Planetary Values,M1,age_first_NDE_c,2.014560410430729
+Social/Planetary Values,M1,CTQ_IM_SCORE_c,1.0980519598895346
+Social/Planetary Values,M1,education_ord_c,1.0914842819813089
+Social/Planetary Values,M1,greyson_total_no_affective_c,1.1284819881755295
+Social/Planetary Values,M1,dx_prior_NDE_Yes_c,1.1212022107607342
+Social/Planetary Values,M1,sex_Male,1.0769491733467382
+Social/Planetary Values,M1,death_context_nature_objective_medical_context,1.3390223745768475
+Social/Planetary Values,M1,death_context_nature_subjective_threat_only,1.3413004806721671
+Social/Planetary Values,M1,latency_first_NDE_proxy_c,2.0109256445713655
+Social/Planetary Values,M2,valence_binary,1.1308283632183367
+Social/Planetary Values,M2,CTQ_IM_SCORE_c,1.0980519598895344
+Social/Planetary Values,M2,education_ord_c,1.0914842819813084
+Social/Planetary Values,M2,greyson_total_no_affective_c,1.1284819881755295
+Social/Planetary Values,M2,dx_prior_NDE_Yes_c,1.1212022107607345
+Social/Planetary Values,M2,sex_Male,1.0769491733467382
+Social/Planetary Values,M2,death_context_nature_objective_medical_context,1.3390223745768475
+Social/Planetary Values,M2,death_context_nature_subjective_threat_only,1.3413004806721667
+Social/Planetary Values,M2,latency_first_NDE_proxy_c,1.2457361220847194
+Social/Planetary Values,M2,age_at_survey_c,1.2153428687686776
+Meaning/Purpose,M0,valence_binary,1.1244485815915617
+Meaning/Purpose,M0,age_first_NDE_c,1.0533520226152138
+Meaning/Purpose,M0,CTQ_IM_SCORE_c,1.094467614269017
+Meaning/Purpose,M0,education_ord_c,1.0872716510806502
+Meaning/Purpose,M0,greyson_total_no_affective_c,1.1230113752011588
+Meaning/Purpose,M0,dx_prior_NDE_Yes_c,1.1207860091259243
+Meaning/Purpose,M0,sex_Male,1.0677230921650112
+Meaning/Purpose,M0,death_context_nature_objective_medical_context,1.3374015987241927
+Meaning/Purpose,M0,death_context_nature_subjective_threat_only,1.3379960176707246
+Meaning/Purpose,M1,valence_binary,1.1308283632183367
+Meaning/Purpose,M1,age_first_NDE_c,2.014560410430729
+Meaning/Purpose,M1,CTQ_IM_SCORE_c,1.0980519598895346
+Meaning/Purpose,M1,education_ord_c,1.0914842819813089
+Meaning/Purpose,M1,greyson_total_no_affective_c,1.1284819881755295
+Meaning/Purpose,M1,dx_prior_NDE_Yes_c,1.1212022107607342
+Meaning/Purpose,M1,sex_Male,1.0769491733467382
+Meaning/Purpose,M1,death_context_nature_objective_medical_context,1.3390223745768475
+Meaning/Purpose,M1,death_context_nature_subjective_threat_only,1.3413004806721671
+Meaning/Purpose,M1,latency_first_NDE_proxy_c,2.0109256445713655
+Meaning/Purpose,M2,valence_binary,1.1308283632183367
+Meaning/Purpose,M2,CTQ_IM_SCORE_c,1.0980519598895344
+Meaning/Purpose,M2,education_ord_c,1.0914842819813084
+Meaning/Purpose,M2,greyson_total_no_affective_c,1.1284819881755295
+Meaning/Purpose,M2,dx_prior_NDE_Yes_c,1.1212022107607345
+Meaning/Purpose,M2,sex_Male,1.0769491733467382
+Meaning/Purpose,M2,death_context_nature_objective_medical_context,1.3390223745768475
+Meaning/Purpose,M2,death_context_nature_subjective_threat_only,1.3413004806721667
+Meaning/Purpose,M2,latency_first_NDE_proxy_c,1.2457361220847194
+Meaning/Purpose,M2,age_at_survey_c,1.2153428687686776
+Spirituality,M0,valence_binary,1.1244485815915617
+Spirituality,M0,age_first_NDE_c,1.0533520226152138
+Spirituality,M0,CTQ_IM_SCORE_c,1.094467614269017
+Spirituality,M0,education_ord_c,1.0872716510806502
+Spirituality,M0,greyson_total_no_affective_c,1.1230113752011588
+Spirituality,M0,dx_prior_NDE_Yes_c,1.1207860091259243
+Spirituality,M0,sex_Male,1.0677230921650112
+Spirituality,M0,death_context_nature_objective_medical_context,1.3374015987241927
+Spirituality,M0,death_context_nature_subjective_threat_only,1.3379960176707246
+Spirituality,M1,valence_binary,1.1308283632183367
+Spirituality,M1,age_first_NDE_c,2.014560410430729
+Spirituality,M1,CTQ_IM_SCORE_c,1.0980519598895346
+Spirituality,M1,education_ord_c,1.0914842819813089
+Spirituality,M1,greyson_total_no_affective_c,1.1284819881755295
+Spirituality,M1,dx_prior_NDE_Yes_c,1.1212022107607342
+Spirituality,M1,sex_Male,1.0769491733467382
+Spirituality,M1,death_context_nature_objective_medical_context,1.3390223745768475
+Spirituality,M1,death_context_nature_subjective_threat_only,1.3413004806721671
+Spirituality,M1,latency_first_NDE_proxy_c,2.0109256445713655
+Spirituality,M2,valence_binary,1.1308283632183367
+Spirituality,M2,CTQ_IM_SCORE_c,1.0980519598895344
+Spirituality,M2,education_ord_c,1.0914842819813084
+Spirituality,M2,greyson_total_no_affective_c,1.1284819881755295
+Spirituality,M2,dx_prior_NDE_Yes_c,1.1212022107607345
+Spirituality,M2,sex_Male,1.0769491733467382
+Spirituality,M2,death_context_nature_objective_medical_context,1.3390223745768475
+Spirituality,M2,death_context_nature_subjective_threat_only,1.3413004806721667
+Spirituality,M2,latency_first_NDE_proxy_c,1.2457361220847194
+Spirituality,M2,age_at_survey_c,1.2153428687686776
+Religiosity,M0,valence_binary,1.1244485815915617
+Religiosity,M0,age_first_NDE_c,1.0533520226152138
+Religiosity,M0,CTQ_IM_SCORE_c,1.094467614269017
+Religiosity,M0,education_ord_c,1.0872716510806502
+Religiosity,M0,greyson_total_no_affective_c,1.1230113752011588
+Religiosity,M0,dx_prior_NDE_Yes_c,1.1207860091259243
+Religiosity,M0,sex_Male,1.0677230921650112
+Religiosity,M0,death_context_nature_objective_medical_context,1.3374015987241927
+Religiosity,M0,death_context_nature_subjective_threat_only,1.3379960176707246
+Religiosity,M1,valence_binary,1.1308283632183367
+Religiosity,M1,age_first_NDE_c,2.014560410430729
+Religiosity,M1,CTQ_IM_SCORE_c,1.0980519598895346
+Religiosity,M1,education_ord_c,1.0914842819813089
+Religiosity,M1,greyson_total_no_affective_c,1.1284819881755295
+Religiosity,M1,dx_prior_NDE_Yes_c,1.1212022107607342
+Religiosity,M1,sex_Male,1.0769491733467382
+Religiosity,M1,death_context_nature_objective_medical_context,1.3390223745768475
+Religiosity,M1,death_context_nature_subjective_threat_only,1.3413004806721671
+Religiosity,M1,latency_first_NDE_proxy_c,2.0109256445713655
+Religiosity,M2,valence_binary,1.1308283632183367
+Religiosity,M2,CTQ_IM_SCORE_c,1.0980519598895344
+Religiosity,M2,education_ord_c,1.0914842819813084
+Religiosity,M2,greyson_total_no_affective_c,1.1284819881755295
+Religiosity,M2,dx_prior_NDE_Yes_c,1.1212022107607345
+Religiosity,M2,sex_Male,1.0769491733467382
+Religiosity,M2,death_context_nature_objective_medical_context,1.3390223745768475
+Religiosity,M2,death_context_nature_subjective_threat_only,1.3413004806721667
+Religiosity,M2,latency_first_NDE_proxy_c,1.2457361220847194
+Religiosity,M2,age_at_survey_c,1.2153428687686776
+Death,M0,valence_binary,1.1244485815915617
+Death,M0,age_first_NDE_c,1.0533520226152138
+Death,M0,CTQ_IM_SCORE_c,1.094467614269017
+Death,M0,education_ord_c,1.0872716510806502
+Death,M0,greyson_total_no_affective_c,1.1230113752011588
+Death,M0,dx_prior_NDE_Yes_c,1.1207860091259243
+Death,M0,sex_Male,1.0677230921650112
+Death,M0,death_context_nature_objective_medical_context,1.3374015987241927
+Death,M0,death_context_nature_subjective_threat_only,1.3379960176707246
+Death,M1,valence_binary,1.1308283632183367
+Death,M1,age_first_NDE_c,2.014560410430729
+Death,M1,CTQ_IM_SCORE_c,1.0980519598895346
+Death,M1,education_ord_c,1.0914842819813089
+Death,M1,greyson_total_no_affective_c,1.1284819881755295
+Death,M1,dx_prior_NDE_Yes_c,1.1212022107607342
+Death,M1,sex_Male,1.0769491733467382
+Death,M1,death_context_nature_objective_medical_context,1.3390223745768475
+Death,M1,death_context_nature_subjective_threat_only,1.3413004806721671
+Death,M1,latency_first_NDE_proxy_c,2.0109256445713655
+Death,M2,valence_binary,1.1308283632183367
+Death,M2,CTQ_IM_SCORE_c,1.0980519598895344
+Death,M2,education_ord_c,1.0914842819813084
+Death,M2,greyson_total_no_affective_c,1.1284819881755295
+Death,M2,dx_prior_NDE_Yes_c,1.1212022107607345
+Death,M2,sex_Male,1.0769491733467382
+Death,M2,death_context_nature_objective_medical_context,1.3390223745768475
+Death,M2,death_context_nature_subjective_threat_only,1.3413004806721667
+Death,M2,latency_first_NDE_proxy_c,1.2457361220847194
+Death,M2,age_at_survey_c,1.2153428687686776
+Other,M0,valence_binary,1.1244485815915617
+Other,M0,age_first_NDE_c,1.0533520226152138
+Other,M0,CTQ_IM_SCORE_c,1.094467614269017
+Other,M0,education_ord_c,1.0872716510806502
+Other,M0,greyson_total_no_affective_c,1.1230113752011588
+Other,M0,dx_prior_NDE_Yes_c,1.1207860091259243
+Other,M0,sex_Male,1.0677230921650112
+Other,M0,death_context_nature_objective_medical_context,1.3374015987241927
+Other,M0,death_context_nature_subjective_threat_only,1.3379960176707246
+Other,M1,valence_binary,1.1308283632183367
+Other,M1,age_first_NDE_c,2.014560410430729
+Other,M1,CTQ_IM_SCORE_c,1.0980519598895346
+Other,M1,education_ord_c,1.0914842819813089
+Other,M1,greyson_total_no_affective_c,1.1284819881755295
+Other,M1,dx_prior_NDE_Yes_c,1.1212022107607342
+Other,M1,sex_Male,1.0769491733467382
+Other,M1,death_context_nature_objective_medical_context,1.3390223745768475
+Other,M1,death_context_nature_subjective_threat_only,1.3413004806721671
+Other,M1,latency_first_NDE_proxy_c,2.0109256445713655
+Other,M2,valence_binary,1.1308283632183367
+Other,M2,CTQ_IM_SCORE_c,1.0980519598895344
+Other,M2,education_ord_c,1.0914842819813084
+Other,M2,greyson_total_no_affective_c,1.1284819881755295
+Other,M2,dx_prior_NDE_Yes_c,1.1212022107607345
+Other,M2,sex_Male,1.0769491733467382
+Other,M2,death_context_nature_objective_medical_context,1.3390223745768475
+Other,M2,death_context_nature_subjective_threat_only,1.3413004806721667
+Other,M2,latency_first_NDE_proxy_c,1.2457361220847194
+Other,M2,age_at_survey_c,1.2153428687686776

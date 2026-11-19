@@ -1,0 +1,7 @@
+variable_1,variable_2,n,pearson_r,spearman_rho
+age_at_survey,age_first_NDE_raw,122,0.38749087761029877,0.33311668004067974
+age_at_survey,latency_first_NDE_proxy,122,0.388958704559625,0.3656433284488273
+age_at_survey,intensity_raw,122,-0.007520786988856999,0.03807022800818021
+age_first_NDE_raw,latency_first_NDE_proxy,122,-0.6985628319974009,-0.7038643010932121
+age_first_NDE_raw,intensity_raw,122,-0.16726003804909134,-0.14744736107016204
+latency_first_NDE_proxy,intensity_raw,122,0.16131029108114234,0.1461390100236553

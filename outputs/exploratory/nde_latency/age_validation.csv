@@ -1,0 +1,3 @@
+source,variable,n,mean,sd,median,q25,q75,min,max,skewness,iqr_fence_low,iqr_fence_high,n_outside_iqr_fences,n_zero,n_missing_input,n_nonnumeric,n_nonfinite,n_negative,n_over_100_review,n_over_120_requires_verification,n_fractional,n_current_under_18_review
+modeling_cohort,age_first_NDE,122,36.557377049180324,16.921329481171924,34.5,23.0,51.0,10.0,79.0,0.4027697194054479,-19.0,93.0,0,0,0,0,0,0,0,0,0,0
+age_file,age,122,59.80327868852459,13.142976847009571,62.0,53.0,68.0,22.0,94.0,-0.41133681413194123,30.5,90.5,4,0,0,0,0,0,0,0,0,0

@@ -1,0 +1,15 @@
+check,count
+modeling_cohort_rows,122
+modeling_cohort_missing_ids,0
+modeling_cohort_duplicate_id_rows,0
+age_file_rows,122
+age_file_missing_ids,0
+age_file_duplicate_id_rows,0
+matched_modeling_participants,122
+unmatched_modeling_participants,0
+age_file_only_participants,0
+first_age_exceeds_current_age,0
+negative_latency,0
+zero_latency,5
+missing_latency,0
+available_latency,122

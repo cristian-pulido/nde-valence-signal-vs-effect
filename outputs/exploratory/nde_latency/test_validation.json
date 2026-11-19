@@ -1,0 +1,17 @@
+{
+  "test_command": "../../.venv/bin/python -m pytest -q",
+  "tests_passed": 23,
+  "tests_failed": 0,
+  "new_focused_test_cases": 16,
+  "summary_word_count_including_table_and_captions": 800,
+  "summary_table_entries_cross_checked": 60,
+  "existing_files_hash_checked": 113,
+  "changed_existing_files": [],
+  "main_tip_unchanged": "58307634aff3788b3b8165483edefc8a8f8dbd06",
+  "interaction_branch_tip_unchanged": "94b21793be12f43ff69e9aa31623b9a735400083",
+  "identical_samples_all_domains": true,
+  "full_rank_all_domains": true,
+  "no_identifying_participant_columns_exported": true,
+  "definition_status": "unverified; user confirms verification is not possible",
+  "test_source_sha256": "d06d9c0440e5a4c4a763af4b212911003afaebd9cf11e75015a9317a91a51944"
+}

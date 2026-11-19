@@ -1,0 +1,201 @@
+outcome,comparison,metric,reference,reproduced,absolute_difference,passed
+Appreciation of Life,saved_vs_original_fitter,intercept,0.722495601354627,0.722495601354627,0.0,True
+Appreciation of Life,saved_vs_original_fitter,intercept_ci_low,0.3451785689143243,0.34517856890634435,7.979950034098238e-12,True
+Appreciation of Life,saved_vs_original_fitter,intercept_ci_high,1.0998126337949297,1.0998126338029097,7.9800610564007e-12,True
+Appreciation of Life,saved_vs_original_fitter,intercept_p_value,0.0002408753397048,0.00024087533970482732,2.7321894746634712e-17,True
+Appreciation of Life,saved_vs_original_fitter,r2,0.2455968776371844,0.2455968776371844,0.0,True
+Appreciation of Life,saved_vs_original_fitter,aic,248.84679005408597,248.84679005408594,2.842170943040401e-14,True
+Appreciation of Life,saved_vs_original_fitter,bic,276.8870005014185,276.8870005014185,0.0,True
+Appreciation of Life,saved_vs_original_fitter,n,122.0,122.0,0.0,True
+Appreciation of Life,saved_vs_original_fitter,effect,0.1270605231118367,0.12706052311183674,5.551115123125783e-17,True
+Appreciation of Life,saved_vs_original_fitter,effect_ci_low,-0.1519217025056858,-0.15192170251158615,5.900363531097241e-12,True
+Appreciation of Life,saved_vs_original_fitter,effect_ci_high,0.4060427487293593,0.40604274873525964,5.900335775521626e-12,True
+Appreciation of Life,saved_vs_original_fitter,effect_p_value,0.3687799510595555,0.3687799510595555,0.0,True
+Appreciation of Life,saved_vs_original_fitter,intercept_p_value_fdr,0.0004817506794096,0.00048175067940965465,5.4643789493269423e-17,True
+Appreciation of Life,saved_vs_original_fitter,effect_p_value_fdr,0.8489341915328257,0.8489341915328253,3.3306690738754696e-16,True
+Self-Acceptance,saved_vs_original_fitter,intercept,1.0114436090165813,1.0114436090165813,0.0,True
+Self-Acceptance,saved_vs_original_fitter,intercept_ci_low,0.6038264081518284,0.6038264081432075,8.62088178621434e-12,True
+Self-Acceptance,saved_vs_original_fitter,intercept_ci_high,1.419060809881334,1.419060809889955,8.621103830819266e-12,True
+Self-Acceptance,saved_vs_original_fitter,intercept_p_value,3.040186530323434e-06,3.04018653032344e-06,5.929230630780102e-21,True
+Self-Acceptance,saved_vs_original_fitter,r2,0.2145544719506723,0.21455447195067234,5.551115123125783e-17,True
+Self-Acceptance,saved_vs_original_fitter,aic,267.6940166371934,267.6940166371934,0.0,True
+Self-Acceptance,saved_vs_original_fitter,bic,295.734227084526,295.73422708452597,5.684341886080802e-14,True
+Self-Acceptance,saved_vs_original_fitter,n,122.0,122.0,0.0,True
+Self-Acceptance,saved_vs_original_fitter,effect,0.0216964747663249,0.0216964747663249,0.0,True
+Self-Acceptance,saved_vs_original_fitter,effect_ci_low,-0.2796892145087158,-0.27968921451509,6.3741789624316425e-12,True
+Self-Acceptance,saved_vs_original_fitter,effect_ci_high,0.3230821640413657,0.3230821640477398,6.374123451280411e-12,True
+Self-Acceptance,saved_vs_original_fitter,effect_p_value,0.8868330749631341,0.8868330749631341,0.0,True
+Self-Acceptance,saved_vs_original_fitter,intercept_p_value_fdr,1.6411999875462008e-05,1.641199987546201e-05,3.3881317890172014e-21,True
+Self-Acceptance,saved_vs_original_fitter,effect_p_value_fdr,0.9204160729915318,0.9204160729915318,0.0,True
+Concern for Others,saved_vs_original_fitter,intercept,0.5672171273429144,0.5672171273429144,0.0,True
+Concern for Others,saved_vs_original_fitter,intercept_ci_low,0.2396101433576561,0.2396101433507274,6.9287076076562926e-12,True
+Concern for Others,saved_vs_original_fitter,intercept_ci_high,0.8948241113281727,0.8948241113351014,6.928679852080677e-12,True
+Concern for Others,saved_vs_original_fitter,intercept_p_value,0.0008443949201153,0.0008443949201153179,1.7889335846010823e-17,True
+Concern for Others,saved_vs_original_fitter,r2,0.2495679161075259,0.24956791610752593,2.7755575615628914e-17,True
+Concern for Others,saved_vs_original_fitter,aic,214.3766420134204,214.37664201342037,2.842170943040401e-14,True
+Concern for Others,saved_vs_original_fitter,bic,242.4168524607529,242.41685246075292,2.842170943040401e-14,True
+Concern for Others,saved_vs_original_fitter,n,122.0,122.0,0.0,True
+Concern for Others,saved_vs_original_fitter,effect,0.1941223327828965,0.19412233278289656,5.551115123125783e-17,True
+Concern for Others,saved_vs_original_fitter,effect_ci_low,-0.048105071924872,-0.04810507192999505,5.123054758193746e-12,True
+Concern for Others,saved_vs_original_fitter,effect_ci_high,0.4363497374906652,0.4363497374957882,5.123013124830322e-12,True
+Concern for Others,saved_vs_original_fitter,effect_p_value,0.1151322100029989,0.11513221000299899,8.326672684688674e-17,True
+Concern for Others,saved_vs_original_fitter,intercept_p_value_fdr,0.0014073248668588,0.001407324866858863,6.310056643865636e-17,True
+Concern for Others,saved_vs_original_fitter,effect_p_value_fdr,0.8060112280938397,0.8060112280938397,0.0,True
+Worldly Achievement,saved_vs_original_fitter,intercept,-0.2401929258781565,-0.24019292587815652,2.7755575615628914e-17,True
+Worldly Achievement,saved_vs_original_fitter,intercept_ci_low,-0.5604343515186441,-0.5604343515254171,6.77302658402823e-12,True
+Worldly Achievement,saved_vs_original_fitter,intercept_ci_high,0.080048499762331,0.08004849976910403,6.77302658402823e-12,True
+Worldly Achievement,saved_vs_original_fitter,intercept_p_value,0.1400616408842715,0.14006164088427156,5.551115123125783e-17,True
+Worldly Achievement,saved_vs_original_fitter,r2,0.1928235494752505,0.1928235494752505,0.0,True
+Worldly Achievement,saved_vs_original_fitter,aic,208.82820305549996,208.82820305549993,2.842170943040401e-14,True
+Worldly Achievement,saved_vs_original_fitter,bic,236.86841350283248,236.86841350283248,0.0,True
+Worldly Achievement,saved_vs_original_fitter,n,122.0,122.0,0.0,True
+Worldly Achievement,saved_vs_original_fitter,effect,-0.1685443438341569,-0.16854434383415698,8.326672684688674e-17,True
+Worldly Achievement,saved_vs_original_fitter,effect_ci_low,-0.405325771596093,-0.40532577160110084,5.007827486025462e-12,True
+Worldly Achievement,saved_vs_original_fitter,effect_ci_high,0.0682370839277791,0.06823708393278691,5.0078136082376545e-12,True
+Worldly Achievement,saved_vs_original_fitter,effect_p_value,0.1612022456187679,0.16120224561876795,5.551115123125783e-17,True
+Worldly Achievement,saved_vs_original_fitter,intercept_p_value_fdr,0.1750770511053394,0.17507705110533944,5.551115123125783e-17,True
+Worldly Achievement,saved_vs_original_fitter,effect_p_value_fdr,0.8060112280938397,0.8060112280938397,0.0,True
+Social/Planetary Values,saved_vs_original_fitter,intercept,0.1002648233773702,0.10026482337737026,6.938893903907228e-17,True
+Social/Planetary Values,saved_vs_original_fitter,intercept_ci_low,-0.1864027393910224,-0.1864027393970853,6.062900181902364e-12,True
+Social/Planetary Values,saved_vs_original_fitter,intercept_ci_high,0.3869323861457629,0.3869323861518258,6.062872426326749e-12,True
+Social/Planetary Values,saved_vs_original_fitter,intercept_p_value,0.489741310243827,0.4897413102438269,1.1102230246251565e-16,True
+Social/Planetary Values,saved_vs_original_fitter,r2,0.0790930394861528,0.07909303948615287,6.938893903907228e-17,True
+Social/Planetary Values,saved_vs_original_fitter,aic,181.80472970738757,181.80472970738754,2.842170943040401e-14,True
+Social/Planetary Values,saved_vs_original_fitter,bic,209.8449401547201,209.84494015472012,2.842170943040401e-14,True
+Social/Planetary Values,saved_vs_original_fitter,n,122.0,122.0,0.0,True
+Social/Planetary Values,saved_vs_original_fitter,effect,0.0276594633666561,0.027659463366656145,4.5102810375396984e-17,True
+Social/Planetary Values,saved_vs_original_fitter,effect_ci_low,-0.1842979830179842,-0.184297983022467,4.482803017680226e-12,True
+Social/Planetary Values,saved_vs_original_fitter,effect_ci_high,0.2396169097512965,0.2396169097557793,4.482803017680226e-12,True
+Social/Planetary Values,saved_vs_original_fitter,effect_p_value,0.7964494462024369,0.796449446202437,1.1102230246251565e-16,True
+Social/Planetary Values,saved_vs_original_fitter,intercept_p_value_fdr,0.5441570113820301,0.5441570113820299,2.220446049250313e-16,True
+Social/Planetary Values,saved_vs_original_fitter,effect_p_value_fdr,0.9204160729915318,0.9204160729915318,0.0,True
+Meaning/Purpose,saved_vs_original_fitter,intercept,0.894225172064578,0.894225172064578,0.0,True
+Meaning/Purpose,saved_vs_original_fitter,intercept_ci_low,0.5251654075262697,0.5251654075184644,7.8053119523247e-12,True
+Meaning/Purpose,saved_vs_original_fitter,intercept_ci_high,1.2632849366028862,1.2632849366106915,7.8053119523247e-12,True
+Meaning/Purpose,saved_vs_original_fitter,intercept_p_value,4.923599962638602e-06,4.923599962638603e-06,8.470329472543003e-22,True
+Meaning/Purpose,saved_vs_original_fitter,r2,0.2691842550554285,0.26918425505542853,5.551115123125783e-17,True
+Meaning/Purpose,saved_vs_original_fitter,aic,243.4477594831595,243.4477594831595,0.0,True
+Meaning/Purpose,saved_vs_original_fitter,bic,271.48796993049206,271.48796993049206,0.0,True
+Meaning/Purpose,saved_vs_original_fitter,n,122.0,122.0,0.0,True
+Meaning/Purpose,saved_vs_original_fitter,effect,0.1119016236754703,0.11190162367547031,1.3877787807814457e-17,True
+Meaning/Purpose,saved_vs_original_fitter,effect_ci_low,-0.1609753091013878,-0.16097530910715901,5.77121683775772e-12,True
+Meaning/Purpose,saved_vs_original_fitter,effect_ci_high,0.3847785564523284,0.3847785564580996,5.77121683775772e-12,True
+Meaning/Purpose,saved_vs_original_fitter,effect_p_value,0.4182154456512046,0.41821544565120483,2.220446049250313e-16,True
+Meaning/Purpose,saved_vs_original_fitter,intercept_p_value_fdr,1.6411999875462008e-05,1.641199987546201e-05,3.3881317890172014e-21,True
+Meaning/Purpose,saved_vs_original_fitter,effect_p_value_fdr,0.8489341915328257,0.8489341915328253,3.3306690738754696e-16,True
+Spirituality,saved_vs_original_fitter,intercept,0.92986075403315,0.9298607540331499,1.1102230246251565e-16,True
+Spirituality,saved_vs_original_fitter,intercept_ci_low,0.5389390495623976,0.5389390495541297,8.26783086438354e-12,True
+Spirituality,saved_vs_original_fitter,intercept_ci_high,1.3207824585039023,1.3207824585121701,8.26783086438354e-12,True
+Spirituality,saved_vs_original_fitter,intercept_p_value,7.069391144178586e-06,7.0693911441785966e-06,1.0164395367051604e-20,True
+Spirituality,saved_vs_original_fitter,r2,0.2261228172755155,0.22612281727551553,2.7755575615628914e-17,True
+Spirituality,saved_vs_original_fitter,aic,257.4896425684359,257.4896425684359,0.0,True
+Spirituality,saved_vs_original_fitter,bic,285.5298530157685,285.5298530157685,0.0,True
+Spirituality,saved_vs_original_fitter,n,122.0,122.0,0.0,True
+Spirituality,saved_vs_original_fitter,effect,0.0939387427432282,0.0939387427432282,0.0,True
+Spirituality,saved_vs_original_fitter,effect_ci_low,-0.1951025614621443,-0.19510256146825738,6.113082262615421e-12,True
+Spirituality,saved_vs_original_fitter,effect_ci_high,0.3829800469486007,0.3829800469547138,6.113110018191037e-12,True
+Spirituality,saved_vs_original_fitter,effect_p_value,0.520925655551244,0.520925655551244,0.0,True
+Spirituality,saved_vs_original_fitter,intercept_p_value_fdr,1.7673477860446466e-05,1.767347786044649e-05,2.371692252312041e-20,True
+Spirituality,saved_vs_original_fitter,effect_p_value_fdr,0.8682094259187401,0.8682094259187401,0.0,True
+Religiosity,saved_vs_original_fitter,intercept,-0.0364510381499826,-0.03645103814998265,4.85722573273506e-17,True
+Religiosity,saved_vs_original_fitter,intercept_ci_low,-0.4539069853884643,-0.4539069853972933,8.828993092180326e-12,True
+Religiosity,saved_vs_original_fitter,intercept_ci_high,0.381004909088499,0.38100490909732804,8.829048603331557e-12,True
+Religiosity,saved_vs_original_fitter,intercept_p_value,0.8629577123202599,0.8629577123202599,0.0,True
+Religiosity,saved_vs_original_fitter,r2,0.1213879755309448,0.12138797553094482,2.7755575615628914e-17,True
+Religiosity,saved_vs_original_fitter,aic,273.51354408181,273.51354408181,0.0,True
+Religiosity,saved_vs_original_fitter,bic,301.55375452914257,301.55375452914257,0.0,True
+Religiosity,saved_vs_original_fitter,n,122.0,122.0,0.0,True
+Religiosity,saved_vs_original_fitter,effect,0.0155991610875986,0.015599161087598606,5.204170427930421e-18,True
+Religiosity,saved_vs_original_fitter,effect_ci_low,-0.2930611411114253,-0.2930611411179533,6.528000362493458e-12,True
+Religiosity,saved_vs_original_fitter,effect_ci_high,0.3242594632866225,0.32425946329315053,6.528055873644689e-12,True
+Religiosity,saved_vs_original_fitter,effect_p_value,0.9204160729915318,0.9204160729915318,0.0,True
+Religiosity,saved_vs_original_fitter,intercept_p_value_fdr,0.8629577123202599,0.8629577123202599,0.0,True
+Religiosity,saved_vs_original_fitter,effect_p_value_fdr,0.9204160729915318,0.9204160729915318,0.0,True
+Death,saved_vs_original_fitter,intercept,0.409161933444618,0.409161933444618,0.0,True
+Death,saved_vs_original_fitter,intercept_ci_low,0.1109615756252782,0.11096157561897141,6.3067884248368955e-12,True
+Death,saved_vs_original_fitter,intercept_ci_high,0.7073622912639578,0.7073622912702646,6.306843935988127e-12,True
+Death,saved_vs_original_fitter,intercept_p_value,0.0075987186060472,0.007598718606047282,8.153200337090993e-17,True
+Death,saved_vs_original_fitter,r2,0.0476433412865563,0.04764334128655634,4.163336342344337e-17,True
+Death,saved_vs_original_fitter,aic,191.4286693903445,191.42866939034454,2.842170943040401e-14,True
+Death,saved_vs_original_fitter,bic,219.4688798376771,219.4688798376771,0.0,True
+Death,saved_vs_original_fitter,n,122.0,122.0,0.0,True
+Death,saved_vs_original_fitter,effect,-0.0270807494696345,-0.027080749469634548,4.85722573273506e-17,True
+Death,saved_vs_original_fitter,effect_ci_low,-0.2475653614849784,-0.24756536148964156,4.6631587480305825e-12,True
+Death,saved_vs_original_fitter,effect_ci_high,0.1934038625457093,0.19340386255037248,4.663186503606198e-12,True
+Death,saved_vs_original_fitter,effect_p_value,0.808172054376685,0.8081720543766849,1.1102230246251565e-16,True
+Death,saved_vs_original_fitter,intercept_p_value_fdr,0.0108553122943532,0.010855312294353261,6.071532165918825e-17,True
+Death,saved_vs_original_fitter,effect_p_value_fdr,0.9204160729915318,0.9204160729915318,0.0,True
+Other,saved_vs_original_fitter,intercept,0.6645662392593498,0.6645662392593498,0.0,True
+Other,saved_vs_original_fitter,intercept_ci_low,0.3939321944495819,0.3939321944438582,5.723699292303763e-12,True
+Other,saved_vs_original_fitter,intercept_ci_high,0.9352002840691176,0.9352002840748413,5.7237548034549945e-12,True
+Other,saved_vs_original_fitter,intercept_p_value,3.764257531082056e-06,3.764257531082061e-06,5.082197683525802e-21,True
+Other,saved_vs_original_fitter,r2,0.2326465103331495,0.23264651033314954,2.7755575615628914e-17,True
+Other,saved_vs_original_fitter,aic,167.76113735000897,167.76113735000897,0.0,True
+Other,saved_vs_original_fitter,bic,195.80134779734152,195.80134779734152,0.0,True
+Other,saved_vs_original_fitter,n,122.0,122.0,0.0,True
+Other,saved_vs_original_fitter,effect,-0.080957689929009,-0.08095768992900901,1.3877787807814457e-17,True
+Other,saved_vs_original_fitter,effect_ci_low,-0.2810602075932413,-0.2810602075974734,4.2321146587198655e-12,True
+Other,saved_vs_original_fitter,effect_ci_high,0.1191448277352233,0.1191448277394554,4.232100780932058e-12,True
+Other,saved_vs_original_fitter,effect_p_value,0.4244670957664128,0.42446709576641267,1.1102230246251565e-16,True
+Other,saved_vs_original_fitter,intercept_p_value_fdr,1.6411999875462008e-05,1.641199987546201e-05,3.3881317890172014e-21,True
+Other,saved_vs_original_fitter,effect_p_value_fdr,0.8489341915328257,0.8489341915328253,3.3306690738754696e-16,True
+Appreciation of Life,matched_m0_vs_original_fitter,n,122.0,122.0,0.0,True
+Appreciation of Life,matched_m0_vs_original_fitter,r2,0.2455968776371844,0.2455968776371844,0.0,True
+Appreciation of Life,matched_m0_vs_original_fitter,effect,0.12706052311183674,0.12706052311183674,0.0,True
+Appreciation of Life,matched_m0_vs_original_fitter,effect_p_value,0.3687799510595555,0.3687799510595555,0.0,True
+Appreciation of Life,matched_m0_vs_original_fitter,aic,248.84679005408594,248.84679005408594,0.0,True
+Appreciation of Life,matched_m0_vs_original_fitter,bic,276.8870005014185,276.8870005014185,0.0,True
+Self-Acceptance,matched_m0_vs_original_fitter,n,122.0,122.0,0.0,True
+Self-Acceptance,matched_m0_vs_original_fitter,r2,0.21455447195067234,0.21455447195067234,0.0,True
+Self-Acceptance,matched_m0_vs_original_fitter,effect,0.0216964747663249,0.0216964747663249,0.0,True
+Self-Acceptance,matched_m0_vs_original_fitter,effect_p_value,0.8868330749631341,0.8868330749631341,0.0,True
+Self-Acceptance,matched_m0_vs_original_fitter,aic,267.6940166371934,267.6940166371934,0.0,True
+Self-Acceptance,matched_m0_vs_original_fitter,bic,295.73422708452597,295.73422708452597,0.0,True
+Concern for Others,matched_m0_vs_original_fitter,n,122.0,122.0,0.0,True
+Concern for Others,matched_m0_vs_original_fitter,r2,0.24956791610752593,0.24956791610752593,0.0,True
+Concern for Others,matched_m0_vs_original_fitter,effect,0.19412233278289656,0.19412233278289656,0.0,True
+Concern for Others,matched_m0_vs_original_fitter,effect_p_value,0.11513221000299899,0.11513221000299899,0.0,True
+Concern for Others,matched_m0_vs_original_fitter,aic,214.37664201342037,214.37664201342037,0.0,True
+Concern for Others,matched_m0_vs_original_fitter,bic,242.41685246075292,242.41685246075292,0.0,True
+Worldly Achievement,matched_m0_vs_original_fitter,n,122.0,122.0,0.0,True
+Worldly Achievement,matched_m0_vs_original_fitter,r2,0.1928235494752505,0.1928235494752505,0.0,True
+Worldly Achievement,matched_m0_vs_original_fitter,effect,-0.16854434383415698,-0.16854434383415698,0.0,True
+Worldly Achievement,matched_m0_vs_original_fitter,effect_p_value,0.16120224561876795,0.16120224561876795,0.0,True
+Worldly Achievement,matched_m0_vs_original_fitter,aic,208.82820305549993,208.82820305549993,0.0,True
+Worldly Achievement,matched_m0_vs_original_fitter,bic,236.86841350283248,236.86841350283248,0.0,True
+Social/Planetary Values,matched_m0_vs_original_fitter,n,122.0,122.0,0.0,True
+Social/Planetary Values,matched_m0_vs_original_fitter,r2,0.07909303948615287,0.07909303948615287,0.0,True
+Social/Planetary Values,matched_m0_vs_original_fitter,effect,0.027659463366656145,0.027659463366656145,0.0,True
+Social/Planetary Values,matched_m0_vs_original_fitter,effect_p_value,0.796449446202437,0.796449446202437,0.0,True
+Social/Planetary Values,matched_m0_vs_original_fitter,aic,181.80472970738754,181.80472970738754,0.0,True
+Social/Planetary Values,matched_m0_vs_original_fitter,bic,209.84494015472012,209.84494015472012,0.0,True
+Meaning/Purpose,matched_m0_vs_original_fitter,n,122.0,122.0,0.0,True
+Meaning/Purpose,matched_m0_vs_original_fitter,r2,0.26918425505542853,0.26918425505542853,0.0,True
+Meaning/Purpose,matched_m0_vs_original_fitter,effect,0.11190162367547031,0.11190162367547031,0.0,True
+Meaning/Purpose,matched_m0_vs_original_fitter,effect_p_value,0.41821544565120483,0.41821544565120483,0.0,True
+Meaning/Purpose,matched_m0_vs_original_fitter,aic,243.4477594831595,243.4477594831595,0.0,True
+Meaning/Purpose,matched_m0_vs_original_fitter,bic,271.48796993049206,271.48796993049206,0.0,True
+Spirituality,matched_m0_vs_original_fitter,n,122.0,122.0,0.0,True
+Spirituality,matched_m0_vs_original_fitter,r2,0.22612281727551553,0.22612281727551553,0.0,True
+Spirituality,matched_m0_vs_original_fitter,effect,0.0939387427432282,0.0939387427432282,0.0,True
+Spirituality,matched_m0_vs_original_fitter,effect_p_value,0.520925655551244,0.520925655551244,0.0,True
+Spirituality,matched_m0_vs_original_fitter,aic,257.4896425684359,257.4896425684359,0.0,True
+Spirituality,matched_m0_vs_original_fitter,bic,285.5298530157685,285.5298530157685,0.0,True
+Religiosity,matched_m0_vs_original_fitter,n,122.0,122.0,0.0,True
+Religiosity,matched_m0_vs_original_fitter,r2,0.12138797553094482,0.12138797553094482,0.0,True
+Religiosity,matched_m0_vs_original_fitter,effect,0.015599161087598606,0.015599161087598606,0.0,True
+Religiosity,matched_m0_vs_original_fitter,effect_p_value,0.9204160729915318,0.9204160729915318,0.0,True
+Religiosity,matched_m0_vs_original_fitter,aic,273.51354408181,273.51354408181,0.0,True
+Religiosity,matched_m0_vs_original_fitter,bic,301.55375452914257,301.55375452914257,0.0,True
+Death,matched_m0_vs_original_fitter,n,122.0,122.0,0.0,True
+Death,matched_m0_vs_original_fitter,r2,0.04764334128655634,0.04764334128655634,0.0,True
+Death,matched_m0_vs_original_fitter,effect,-0.027080749469634548,-0.027080749469634548,0.0,True
+Death,matched_m0_vs_original_fitter,effect_p_value,0.8081720543766849,0.8081720543766849,0.0,True
+Death,matched_m0_vs_original_fitter,aic,191.42866939034454,191.42866939034454,0.0,True
+Death,matched_m0_vs_original_fitter,bic,219.4688798376771,219.4688798376771,0.0,True
+Other,matched_m0_vs_original_fitter,n,122.0,122.0,0.0,True
+Other,matched_m0_vs_original_fitter,r2,0.23264651033314954,0.23264651033314954,0.0,True
+Other,matched_m0_vs_original_fitter,effect,-0.08095768992900901,-0.08095768992900901,0.0,True
+Other,matched_m0_vs_original_fitter,effect_p_value,0.42446709576641267,0.42446709576641267,0.0,True
+Other,matched_m0_vs_original_fitter,aic,167.76113735000897,167.76113735000897,0.0,True
+Other,matched_m0_vs_original_fitter,bic,195.80134779734152,195.80134779734152,0.0,True

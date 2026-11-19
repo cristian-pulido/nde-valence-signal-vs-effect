@@ -1,0 +1,28 @@
+{
+  "same_environment": true,
+  "byte_identical": true,
+  "n_files_compared": 20,
+  "different_files": [],
+  "sha256": {
+    "age_validation.csv": "5520ef9fb76a4852d7bede8666f442fef67238386f1640c85efaaddd0016a4ca",
+    "aggregate_sensitivity.csv": "a0581a347d6168644e709c506800ad0865258cc5507f99f4722c83e2fb4b6c28",
+    "baseline_validation.csv": "894f11fc1c6d15ce59e3a093dc14c66b089d32853b9f21de83e9bc0df3a65693",
+    "intensity_valence_stability.png": "1fd44feb23808df388e3a491534d532561ae026c4a1ccb88c1d2fe17bdc56163",
+    "intensity_valence_stability.svg": "a0c8472a20a089bb2a0bcf11d5a147928f9b2232422c328ef66a756d44281caa",
+    "latency_analysis_report.md": "2aad5d5b4c0668688a4c40f9970b2a0a3dab5333bc013f308a741b30a91dc374",
+    "latency_analysis_summary.md": "4be98364af5bfe0900ada67c3454403c166fbe87bda1296f464a97b1f3a2bedf",
+    "latency_coefficients.png": "e0339a7209a3677756c0e1e9748e058198de8ce105d3524b060731041f41e11a",
+    "latency_coefficients.svg": "a7879012df4e72c11cb42b6ad43c6209674c8e6b88fdb2b8c5c673cdfbf36055",
+    "latency_descriptive_statistics.csv": "55a45ee697e0860715fd898727826a2fb269740efed37ae09cd584cabd98c485",
+    "latency_distribution.png": "7454f3e048237410a9f7d0eaec82f88ed433ece9639d4fd05a6219812968d8de",
+    "latency_distribution.svg": "3b6cec67e7db31ec82e1d95fc88db5c57dda2c9583e4259efe58b27fbad5546c",
+    "latency_model_comparison.csv": "bd3e025788670d9f11bd9b0af1ab81b63c89fa4b0f4cecae7a824c9966bd6cb1",
+    "m1_m2_equivalence.csv": "d67b7023ef8817c82a3b893aa0781ed4bb7e6c8a3f8c47419a5e2815e1dabae6",
+    "merge_diagnostics.csv": "da1fe9839cd6655253dbbf0a8645117d41755bf4d625ea6fc6ce34cf712b9f35",
+    "model_coefficients.csv": "bc5beb259ae91eb413ff91ae923e2172c44ce2a7001d0b678664957971f404e4",
+    "model_vif.csv": "a04e9e03c4b5d92128f26487acb184c7f0cff1086c22b607b89742ea1a0ff0f6",
+    "provenance_status.json": "e61d5eb25e57ce1003940543c676c252d2cf58781bc5dbc84a5bf7a6b63a2877",
+    "run_manifest.json": "7b339ceb9a8c0fc9c5ffaba25660c2bfdb17d7e22cd90ce6c2560c7d9e3e2e27",
+    "temporal_correlations.csv": "08fac19515cb5f18de04e57ef4eb9a567ac372a6eb2250a90a8d92cfe6b6087e"
+  }
+}

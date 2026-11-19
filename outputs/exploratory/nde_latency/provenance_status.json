@@ -1,0 +1,18 @@
+{
+  "age_at_survey_definition": "unverified",
+  "first_lifetime_nde_age_definition": "unverified",
+  "evaluated_event_selection": "unknown",
+  "multiple_nde_indicator_or_count": "not available in local data",
+  "evaluated_nde_age_or_date": "not available in local data",
+  "user_clarification": "User states the age definitions and event selection cannot be verified.",
+  "operational_definition": "supplied age minus supplied age_first_NDE",
+  "interpretation": "Provisional first-NDE latency proxy only, conditional on supplied field meanings; not verified evaluated-event latency.",
+  "local_documentation_checked": [
+    "README.md",
+    "src/nde_analysis/preprocess/transform.py",
+    "src/nde_analysis/preprocess/mappings.py",
+    "src/nde_analysis/cli.py",
+    "../../COLLINEARITY_PRESENTATION_INPUT.md",
+    "../../COLLINEARITY_PRESENTATION_INPUT copy.md"
+  ]
+}
