@@ -1,0 +1,23 @@
+{
+  "command": "../../.venv/bin/python scripts/run_intensity_valence_interaction.py",
+  "same_environment": true,
+  "byte_identical": true,
+  "n_files_compared": 14,
+  "different_files": [],
+  "sha256": {
+    "baseline_validation.csv": "26cfaa999cbd8550f49a9c7af13d5868d1e6566206c0318169c5da855e8a5e8b",
+    "influence_diagnostics.csv": "c5efe48b88ce60832b5056ce4fbfe5170be3c2438f3313dc681092c2cdece606",
+    "intensity_distribution_by_domain.csv": "99eeea12bd6f3b9661db2a689eb043dab29b1a802c40283d96c012233e008253",
+    "intensity_distribution_eligible.csv": "3eddfc091cacaab3b3b9cb2f7987b9f4f1eec14c1b200f1f90ec8d92cee8f42b",
+    "intensity_overlap.png": "89508329e45d26c1815af23ddffa19d1bf7d8ce2928fbef700c715b8f3e63452",
+    "interaction_analysis_report.md": "10c0ec2e8b0c287df5b71b8cf4a93439a9b6ebbddfd65ce2d0f2819472565da8",
+    "interaction_coefficients.png": "5de0d239f1ed25ad150567d5689461dcc9e830aa548a20d8a6c0c11980fa15a2",
+    "interaction_coefficients.svg": "358a0e38241644391417d8562b35424345d07b63c65bf7d6f11279a11e886fd8",
+    "interaction_results.csv": "f92764d769791907043edf2b2c7286bfcf6015b3efe837db7518d3176e6fb8e1",
+    "model_coefficients.csv": "5dcd2d1f668c865b0fa6b0d6767b7e5e8151dd7df81006c106d0d41062bc80b3",
+    "predicted_death.csv": "da9401741eebaac45aabd0d6047dd9b6ff03eb2819dbe13db8651ebe355c75d9",
+    "predicted_death.png": "9188afb8b1106af07904a8adf7ca043db04bfebd8575a171fa42cbf8a771ebfc",
+    "run_manifest.json": "5051dcc2f2faf00368a6774bea270f97897ac6530263d8f59f9ce48184b70722",
+    "unadjusted_sensitivity.csv": "0b6db7b834fd5a076747aa516b4613aa577e5a97f6ba70380abd4e880c0b4d04"
+  }
+}

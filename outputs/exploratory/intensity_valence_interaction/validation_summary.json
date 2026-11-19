@@ -1,0 +1,9 @@
+{
+  "test_command": "../../.venv/bin/python -m pytest -q",
+  "test_exit_code": 0,
+  "test_output": ".............                                                            [100%]\n13 passed in 6.70s",
+  "original_files_checked": 105,
+  "changed_original_files": [],
+  "protected_files_unchanged": true,
+  "test_source_sha256": "6beb903e244c9f0b2f044bdb242abcde5125ab534d2b2e8fb90e0904a8554d3b"
+}
