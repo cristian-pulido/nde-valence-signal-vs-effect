@@ -53,4 +53,4 @@ Death’s nominal finding was similar with HC3 robust standard errors (p=0.0212)
 
 ## 5. Implications for the manuscript
 
-**Option A:** Briefly report the exploration in Results, acknowledge limitations in Discussion, and provide complete supplementary results. This exposes evidence and uncertainty but adds complexity. **Option B:** Present the analysis and limitations in the reviewer response without adding them to the main manuscript. This preserves focus but reduces readers’ access to the exploration. Coauthors can weigh transparency against manuscript focus and length.
+**Option A:** Briefly report the exploration in Results, acknowledge limitations in Discussion. This exposes evidence and uncertainty but adds complexity. **Option B:** Present the analysis and limitations in the reviewer response without adding them to the main manuscript. This preserves focus but reduces readers’ access to the exploration.
