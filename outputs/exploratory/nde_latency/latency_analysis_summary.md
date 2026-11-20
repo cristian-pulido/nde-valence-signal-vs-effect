@@ -54,7 +54,3 @@ Intensity retained its direction in every domain and met the same domain-specifi
 ## 6. Limitations
 
 Unknown event selection and multiple-NDE status prevent validating the temporal interpretation. Whole-year ages limit precision. Holding first-NDE age constant, larger differences also imply older current age; duration and ageing cannot be separated. Substituting current age for first-NDE age reproduced predictions: mathematical equivalence, not independent validation. ΔR² reflects within-sample fit, not validated prediction. Cross-sectional associations do not establish causality.
-
-## 7. Implications for the manuscript
-
-Coauthors could report this explicitly provisional exploration with complete supplementary results, or discuss it only in the reviewer response because the temporal definition remains unverified. The choice balances transparency against the risk of implying a valid adjustment for the evaluated NDE. Neither option is selected here.
